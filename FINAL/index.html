@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SURIYA P | Portfolio</title>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ===== NETWORK CANVAS (ONLY ONE) ===== -->
+  <canvas id="net"></canvas>
+
+  <!-- ===== PAGE WRAPPER (FIXES SHIFTING) ===== -->
+  <div class="page-wrap">
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar">
+      <a href="index.html" class="logo">SURIYA P</a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about-me.html">About Me</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="contact.html">Contact</a></li>
+
+        <li class="dropdown">
+          <span class="dropbtn">More <span class="caret">▾</span></span>
+          <ul class="dropdown-menu">
+            <li><a href="education.html">Education</a></li>
+            <li><a href="certifications.html">Certifications</a></li>
+            <li><a href="volunteering.html">Volunteering</a></li>
+            <li><a href="organizations.html">Organizations</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+
+      <div class="hero-content">
+        <h1>SURIYA PRASATH PARAMESWARAN</h1>
+
+        <p class="typing-line">
+          <span id="typing-text"></span>
+          <span class="typing-caret">|</span>
+        </p>
+
+        <p class="highlight">
+          Specializing in decision-focused machine learning, risk modeling,
+          and business intelligence systems built on real-world data.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="assets/resume/Suriya_Resume.pdf" class="cta-button" download>
+            <i class="fa-solid fa-download"></i>
+            Download Resume
+          </a>
+
+          <a href="assets/resume/Suriya_Resume.pdf"
+             class="cta-button secondary"
+             target="_blank"
+             rel="noopener">
+            <i class="fa-solid fa-eye"></i>
+            View Resume
+          </a>
+
+          <a href="contact.html" class="cta-button secondary">
+            <i class="fa-solid fa-paper-plane"></i>
+            Contact Me
+          </a>
+        </div>
+
+        <div class="hero-social">
+          <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="profile.jpg" alt="Suriya Profile" class="profile-img">
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+      <p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p>
+
+      <div class="social-links">
+        <a href="#"><i class="fa-brands fa-github"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="mailto:your@email.com"><i class="fa-solid fa-envelope"></i></a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- JS (ONLY ONCE) -->
+  <script src="script.js" defer></script>
+
+</body>
+</html>
