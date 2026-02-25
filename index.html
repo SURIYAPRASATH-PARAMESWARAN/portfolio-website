@@ -22,11 +22,11 @@
   <!-- ===== NETWORK CANVAS ===== -->
   <canvas id="net"></canvas>
 
-  <!-- ================= NAVBAR (MOVED OUT) ================= -->
+  <!-- ================= NAVBAR ================= -->
   <nav class="navbar">
     <a href="index.html" class="logo">SURIYA P</a>
 
-    <button class="nav-toggle">
+    <button class="nav-toggle" aria-label="Toggle navigation">
       <span></span><span></span><span></span>
     </button>
 
@@ -74,10 +74,12 @@
             Download Resume
           </a>
 
+          <!-- CHANGED: opens modal -->
           <a href="assets/resume/Suriya_Resume.pdf"
              class="cta-button secondary"
-             target="_blank"
-             rel="noopener">
+             id="open-resume"
+             aria-haspopup="dialog"
+             aria-controls="resume-modal">
             <i class="fa-solid fa-eye"></i>
             View Resume
           </a>
@@ -88,9 +90,14 @@
           </a>
         </div>
 
+        <!-- CHANGED: fixed links -->
         <div class="hero-social">
-          <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="https://github.com/SURIYAPRASATH-PARAMESWARAN" target="_blank" rel="noopener" aria-label="GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/suriyaprasathp" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
         </div>
       </div>
 
@@ -104,12 +111,50 @@
       <p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p>
 
       <div class="social-links">
-        <a href="#"><i class="fa-brands fa-github"></i></a>
-        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="mailto:your@email.com"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://github.com/SURIYAPRASATH-PARAMESWARAN" target="_blank" rel="noopener" aria-label="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+
+        <a href="https://www.linkedin.com/in/suriyaprasathp" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+
+        <a href="mailto:suriyavictor6@gmail.com" aria-label="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
       </div>
     </footer>
 
+  </div>
+
+  <!-- ===== RESUME MODAL ===== -->
+  <div class="resume-modal" id="resume-modal" aria-hidden="true">
+    <div class="resume-backdrop" data-close="true"></div>
+
+    <div class="resume-card" role="dialog" aria-modal="true" aria-label="Resume viewer">
+      <div class="resume-header">
+        <h3>Resume</h3>
+
+        <div class="resume-actions">
+          <a class="resume-download"
+             href="assets/resume/Suriya_Resume.pdf"
+             download>
+            <i class="fa-solid fa-download"></i> Download
+          </a>
+
+          <button class="resume-close" type="button" aria-label="Close" data-close="true">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="resume-body">
+        <iframe
+          src="assets/resume/Suriya_Resume.pdf#view=FitH"
+          title="Suriya Resume PDF"
+          loading="lazy"></iframe>
+      </div>
+    </div>
   </div>
 
   <!-- JS -->

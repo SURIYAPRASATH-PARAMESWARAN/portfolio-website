@@ -253,3 +253,48 @@ if(toggle && links){
     links.classList.toggle("open");
   };
 }
+
+// =========================
+// Resume Modal
+// =========================
+(() => {
+  const openBtn = document.getElementById("open-resume");
+  const modal = document.getElementById("resume-modal");
+  if (!openBtn || !modal) return;
+
+  const closeSelectors = modal.querySelectorAll("[data-close='true']");
+  const focusableSelector = "a, button, input, textarea, select, [tabindex]:not([tabindex='-1'])";
+
+  let lastFocus = null;
+
+  function openModal(e){
+    e.preventDefault();
+    lastFocus = document.activeElement;
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+
+    // focus first focusable element (download or close)
+    const focusable = modal.querySelectorAll(focusableSelector);
+    if (focusable.length) focusable[0].focus();
+  }
+
+  function closeModal(){
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+    if (lastFocus) lastFocus.focus();
+  }
+
+  openBtn.addEventListener("click", openModal);
+
+  closeSelectors.forEach(el => {
+    el.addEventListener("click", closeModal);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!modal.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeModal();
+  });
+})();
