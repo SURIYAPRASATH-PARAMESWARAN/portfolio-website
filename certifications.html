@@ -15,37 +15,39 @@
 </head>
 
 <body>
+  <!-- BACKGROUND CANVAS -->
   <canvas id="net"></canvas>
 
+  <!-- ================= NAVBAR (MOVED OUT) ================= -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">SURIYA P</a>
+
+    <button class="nav-toggle">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about-me.html">About Me</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="contact.html">Contact</a></li>
+
+      <li class="dropdown">
+        <span class="dropbtn">More <span class="caret">▾</span></span>
+        <ul class="dropdown-menu">
+          <li><a href="education.html">Education</a></li>
+          <li><a href="certifications.html" class="active">Certifications</a></li>
+          <li><a href="volunteering.html">Volunteering</a></li>
+          <li><a href="organizations.html">Organizations</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ================= PAGE CONTENT ================= -->
   <div class="page-wrap">
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-      <a href="index.html" class="logo">SURIYA P</a>
-      <button class="nav-toggle">
-        <span></span><span></span><span></span>
-      </button>
-
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about-me.html">About Me</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="skills.html">Skills</a></li>
-        <li><a href="contact.html">Contact</a></li>
-
-        <li class="dropdown">
-          <span class="dropbtn">More <span class="caret">▾</span></span>
-          <ul class="dropdown-menu">
-            <li><a href="education.html">Education</a></li>
-            <li><a href="certifications.html" class="active">Certifications</a></li>
-            <li><a href="volunteering.html">Volunteering</a></li>
-            <li><a href="organizations.html">Organizations</a></li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- MAIN -->
     <main class="page-container">
       <section class="certifications">
         <h1 class="page-title">Certifications</h1>
@@ -55,7 +57,6 @@
 
         <div class="cert-grid">
 
-          <!-- 1 -->
           <div class="cert-card">
             <div class="cert-icon">
               <i class="fa-solid fa-circle-check"></i>
@@ -69,7 +70,6 @@
             <span class="cert-date"><i class="fa-solid fa-certificate"></i> Issued March 2024</span>
           </div>
 
-          <!-- 2 -->
           <div class="cert-card">
             <div class="cert-icon">
               <i class="fa-solid fa-circle-check"></i>
@@ -83,7 +83,6 @@
             <span class="cert-date"><i class="fa-solid fa-certificate"></i> Issued February 2024</span>
           </div>
 
-          <!-- 3 -->
           <div class="cert-card">
             <div class="cert-icon">
               <i class="fa-solid fa-circle-check"></i>
@@ -97,7 +96,6 @@
             <span class="cert-date"><i class="fa-solid fa-certificate"></i> Issued 2022</span>
           </div>
 
-          <!-- 4 -->
           <div class="cert-card">
             <div class="cert-icon">
               <i class="fa-solid fa-circle-check"></i>
@@ -111,7 +109,6 @@
             <span class="cert-date"><i class="fa-solid fa-certificate"></i> Issued December 2024</span>
           </div>
 
-          <!-- 5 -->
           <div class="cert-card">
             <div class="cert-icon">
               <i class="fa-solid fa-circle-check"></i>

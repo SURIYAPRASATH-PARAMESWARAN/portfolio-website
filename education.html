@@ -15,11 +15,13 @@
 </head>
 
 <body>
-   <canvas id="net"></canvas>
+  <!-- BACKGROUND -->
+  <canvas id="net"></canvas>
 
-  <!-- NAVBAR -->
+  <!-- ================= NAVBAR ================= -->
   <nav class="navbar">
     <a href="index.html" class="logo">SURIYA P</a>
+
     <button class="nav-toggle">
       <span></span><span></span><span></span>
     </button>
@@ -43,87 +45,93 @@
     </ul>
   </nav>
 
-  <!-- MAIN -->
-  <main class="page-container">
-    <section class="education-page">
-      <h1>Education</h1>
-      <p class="edu-intro">
-        Academic background focused on data science systems, machine learning, and applied analytics.
-      </p>
+  <!-- ================= PAGE CONTENT ================= -->
+  <div class="page-wrap">
 
-      <!-- MSc -->
-      <div class="edu-card">
-        <div class="edu-icon">
-          <i class="fa-solid fa-graduation-cap"></i>
-        </div>
+    <!-- MAIN -->
+    <main class="page-container">
+      <section class="education-page">
+        <h1>Education</h1>
+        <p class="edu-intro">
+          Academic background focused on data science systems, machine learning, and applied analytics.
+        </p>
 
-        <div class="edu-content">
-          <h2>University of Leeds</h2>
-          <div class="edu-degree">Master of Science (MSc) — Data Science and Analytics</div>
-          <div class="edu-meta">
-            <span><i class="fa-regular fa-calendar"></i> Sep 2024 – Sep 2025</span>
-            <span><i class="fa-solid fa-location-dot"></i> Leeds, United Kingdom</span>
+        <!-- MSc -->
+        <div class="edu-card">
+          <div class="edu-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
           </div>
 
-          <p>
-            Focused on advanced machine learning, statistical modeling, deep learning,
-            natural language processing, and scalable data systems.
-          </p>
-
-          <div class="edu-tags">
-            <span class="chip blue">Applied ML</span>
-            <span class="chip purple">NLP</span>
-            <span class="chip dark">Time Series</span>
-            <span class="chip dark">Cloud & Big Data</span>
-          </div>
-
-          <ul class="edu-list">
-            <li>Coursework: Data Mining, Time Series Analysis, Applied Machine Learning, Cloud Computing, Big Data Analytics</li>
-            <li>Highlighted work: CVE Severity Intelligence Engine (NVD → NLP → ML classifier)</li>
-            <li>Activities: Data Science community involvement & project-based research</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- BE -->
-      <div class="edu-card">
-        <div class="edu-icon">
-          <i class="fa-solid fa-building-columns"></i>
-        </div>
-
-        <div class="edu-content">
-          <h2>SRM Easwari Engineering College</h2>
-          <div class="edu-degree">Bachelor of Engineering (BE) — Mechanical Engineering</div>
-          <div class="edu-meta">
+          <div class="edu-content">
+            <h2>University of Leeds</h2>
+            <div class="edu-degree">Master of Science (MSc) — Data Science and Analytics</div>
             <div class="edu-meta">
-            <span><i class="fa-regular fa-calendar"></i> Jun 2018 – Mar 2022</span>
-            <span><i class="fa-solid fa-location-dot"></i> Chennai, India</span>
+              <span><i class="fa-regular fa-calendar"></i> Sep 2024 – Sep 2025</span>
+              <span><i class="fa-solid fa-location-dot"></i> Leeds, United Kingdom</span>
+            </div>
+
+            <p>
+              Focused on advanced machine learning, statistical modeling, deep learning,
+              natural language processing, and scalable data systems.
+            </p>
+
+            <div class="edu-tags">
+              <span class="chip blue">Applied ML</span>
+              <span class="chip purple">NLP</span>
+              <span class="chip dark">Time Series</span>
+              <span class="chip dark">Cloud & Big Data</span>
+            </div>
+
+            <ul class="edu-list">
+              <li>Coursework: Data Mining, Time Series Analysis, Applied Machine Learning, Cloud Computing, Big Data Analytics</li>
+              <li>Highlighted work: CVE Severity Intelligence Engine (NVD → NLP → ML classifier)</li>
+              <li>Activities: Data Science community involvement & project-based research</li>
+            </ul>
           </div>
-
-          <p>
-            Strong foundation in engineering problem-solving with a growing focus on
-            data-driven systems, IoT, and automation.
-          </p>
-
-          <div class="edu-tags">
-            <span class="chip dark">Engineering Systems</span>
-            <span class="chip green">IoT</span>
-            <span class="chip dark">Applied Projects</span>
-          </div>
-
-          <ul class="edu-list">
-            <li>Hands-on project work in analysis, automation, and data visualization</li>
-            <li>Activities: IEEE involvement, Youth Red Cross, tech + community events</li>
-          </ul>
         </div>
-      </div>
 
-    </section>
-  </main>
+        <!-- BE -->
+        <div class="edu-card">
+          <div class="edu-icon">
+            <i class="fa-solid fa-building-columns"></i>
+          </div>
 
-  <footer>
-    <p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p>
-  </footer>
-<script src="script.js" defer></script>
+          <div class="edu-content">
+            <h2>SRM Easwari Engineering College</h2>
+            <div class="edu-degree">Bachelor of Engineering (BE) — Mechanical Engineering</div>
+            <div class="edu-meta">
+              <span><i class="fa-regular fa-calendar"></i> Jun 2018 – Mar 2022</span>
+              <span><i class="fa-solid fa-location-dot"></i> Chennai, India</span>
+            </div>
+
+            <p>
+              Strong foundation in engineering problem-solving with a growing focus on
+              data-driven systems, IoT, and automation.
+            </p>
+
+            <div class="edu-tags">
+              <span class="chip dark">Engineering Systems</span>
+              <span class="chip green">IoT</span>
+              <span class="chip dark">Applied Projects</span>
+            </div>
+
+            <ul class="edu-list">
+              <li>Hands-on project work in analysis, automation, and data visualization</li>
+              <li>Activities: IEEE involvement, Youth Red Cross, tech + community events</li>
+            </ul>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
