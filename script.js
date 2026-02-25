@@ -244,3 +244,12 @@ document.querySelectorAll(".card-spotlight").forEach((card) => {
   build();
   draw();
 })();
+
+const toggle = document.querySelector(".nav-toggle");
+const links = document.querySelector(".nav-links");
+
+if(toggle && links){
+  toggle.onclick = () => {
+    links.classList.toggle("open");
+  };
+}
