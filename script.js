@@ -2,12 +2,16 @@
    PAGE TRANSITIONS
 ========================= */
 
-// Fade in on load
+// Fade in page CONTENT on load — navbar stays visible always
 window.addEventListener("DOMContentLoaded", () => {
-  document.body.classList.add("page-ready");
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      document.body.classList.add("page-ready");
+    });
+  });
 });
 
-// Fade out on internal navigation
+// Fade out CONTENT only on internal navigation
 document.addEventListener("click", (e) => {
   const link = e.target.closest("a");
   if (!link) return;
@@ -16,18 +20,20 @@ document.addEventListener("click", (e) => {
   if (!href) return;
 
   const isExternal = href.startsWith("http");
-  const isAnchor = href.startsWith("#");
-  const isMail = href.startsWith("mailto:") || href.startsWith("tel:");
-  const isFile = href.endsWith(".pdf") || link.hasAttribute("download");
+  const isAnchor   = href.startsWith("#");
+  const isMail     = href.startsWith("mailto:") || href.startsWith("tel:");
+  const isFile     = href.endsWith(".pdf") || link.hasAttribute("download");
 
   if (isExternal || isAnchor || isMail || isFile) return;
 
   e.preventDefault();
+  document.body.classList.remove("page-ready");
   document.body.classList.add("page-leave");
 
+  // Wait exactly as long as the leave transition (0.2s)
   setTimeout(() => {
     window.location.href = href;
-  }, 260);
+  }, 200);
 });
 
 /* =========================
@@ -130,6 +136,7 @@ document.querySelectorAll(".card-spotlight").forEach((card) => {
 
 /* =========================
    NETWORK CANVAS (ALL PAGES)
+   FIXED: mouse offset, stable sizing, no dpr mismatch
 ========================= */
 
 (() => {
@@ -142,29 +149,37 @@ document.querySelectorAll(".card-spotlight").forEach((card) => {
   const ctx = canvas.getContext("2d");
   let w, h, dpr;
   const particles = [];
+
+  // FIX: store raw CSS-space mouse coords (clientX/Y are already CSS px)
   const mouse = { x: -9999, y: -9999, active: false };
 
   function resize() {
     dpr = Math.min(2, window.devicePixelRatio || 1);
     w = window.innerWidth;
     h = window.innerHeight;
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    canvas.style.width = w + "px";
+
+    // Physical pixel size of the canvas buffer
+    canvas.width  = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+
+    // CSS display size always matches viewport — no offset possible
+    canvas.style.width  = w + "px";
     canvas.style.height = h + "px";
+
+    // Scale context so every draw call uses CSS pixels (no manual dpr multiply needed)
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
   function build() {
     particles.length = 0;
-    const count = Math.max(35, Math.min(120, (w * h) / 15000));
+    const count = Math.max(35, Math.min(120, Math.round((w * h) / 15000)));
     for (let i = 0; i < count; i++) {
       particles.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
+        x:  Math.random() * w,
+        y:  Math.random() * h,
         vx: (Math.random() - 0.5) * 0.35,
         vy: (Math.random() - 0.5) * 0.35,
-        r: Math.random() * 1.4 + 0.6
+        r:  Math.random() * 1.4 + 0.6
       });
     }
   }
@@ -172,11 +187,10 @@ document.querySelectorAll(".card-spotlight").forEach((card) => {
   function draw() {
     ctx.clearRect(0, 0, w, h);
 
-    // dots
+    // ---- move + bounce particles ----
     for (const p of particles) {
       p.x += p.vx;
       p.y += p.vy;
-
       if (p.x < 0 || p.x > w) p.vx *= -1;
       if (p.y < 0 || p.y > h) p.vy *= -1;
 
@@ -186,16 +200,17 @@ document.querySelectorAll(".card-spotlight").forEach((card) => {
       ctx.fill();
     }
 
-    // lines between close particles
+    // ---- particle–particle lines ----
     const maxDist = 120;
+    ctx.lineWidth = 1;
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const a = particles[i], b = particles[j];
         const dx = a.x - b.x, dy = a.y - b.y;
         const dist = Math.hypot(dx, dy);
         if (dist < maxDist) {
-          const alpha = 1 - dist / maxDist;
-          ctx.strokeStyle = `rgba(77,183,255,${alpha * 0.35})`;
+          const alpha = (1 - dist / maxDist) * 0.35;
+          ctx.strokeStyle = `rgba(77,183,255,${alpha})`;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
@@ -204,19 +219,20 @@ document.querySelectorAll(".card-spotlight").forEach((card) => {
       }
     }
 
-    // mouse connections
+    // ---- mouse–particle lines (FIX: use raw clientX/Y space, same as CSS px) ----
     if (mouse.active) {
-        ctx.lineWidth = 1.6;
+      ctx.lineWidth = 1.6;
       const mouseDist = 150;
       for (const p of particles) {
-        const dx = p.x - mouse.x, dy = p.y - mouse.y;
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
         const dist = Math.hypot(dx, dy);
         if (dist < mouseDist) {
-          const alpha = 1 - dist / mouseDist;
-          ctx.strokeStyle = `rgba(77,183,255,${alpha * 0.85})`;
+          const alpha = (1 - dist / mouseDist) * 0.85;
+          ctx.strokeStyle = `rgba(77,183,255,${alpha})`;
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
-          ctx.lineTo(mouse.x, mouse.y);
+          ctx.lineTo(mouse.x, mouse.y);  // direct CSS-px coords — no offset
           ctx.stroke();
         }
       }
@@ -225,6 +241,8 @@ document.querySelectorAll(".card-spotlight").forEach((card) => {
     requestAnimationFrame(draw);
   }
 
+  // FIX: use clientX/Y directly — these are already CSS-pixel space
+  // (matching the ctx transform which is also in CSS-pixel space)
   window.addEventListener("mousemove", (e) => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
@@ -235,9 +253,14 @@ document.querySelectorAll(".card-spotlight").forEach((card) => {
     mouse.active = false;
   });
 
+  let resizeTimer;
   window.addEventListener("resize", () => {
-    resize();
-    build();
+    // Debounce resize to avoid thrashing
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      resize();
+      build();
+    }, 100);
   });
 
   resize();
@@ -245,29 +268,32 @@ document.querySelectorAll(".card-spotlight").forEach((card) => {
   draw();
 })();
 
+/* =========================
+   NAV TOGGLE (mobile)
+========================= */
 const toggle = document.querySelector(".nav-toggle");
-const links = document.querySelector(".nav-links");
+const links  = document.querySelector(".nav-links");
 
-if(toggle && links){
+if (toggle && links) {
   toggle.onclick = () => {
     links.classList.toggle("open");
   };
 }
 
-// =========================
-// Resume Modal
-// =========================
+/* =========================
+   RESUME MODAL
+========================= */
 (() => {
   const openBtn = document.getElementById("open-resume");
-  const modal = document.getElementById("resume-modal");
+  const modal   = document.getElementById("resume-modal");
   if (!openBtn || !modal) return;
 
-  const closeSelectors = modal.querySelectorAll("[data-close='true']");
+  const closeSelectors   = modal.querySelectorAll("[data-close='true']");
   const focusableSelector = "a, button, input, textarea, select, [tabindex]:not([tabindex='-1'])";
 
   let lastFocus = null;
 
-  function openModal(e){
+  function openModal(e) {
     e.preventDefault();
     lastFocus = document.activeElement;
 
@@ -275,12 +301,11 @@ if(toggle && links){
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("modal-open");
 
-    // focus first focusable element (download or close)
     const focusable = modal.querySelectorAll(focusableSelector);
     if (focusable.length) focusable[0].focus();
   }
 
-  function closeModal(){
+  function closeModal() {
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("modal-open");
