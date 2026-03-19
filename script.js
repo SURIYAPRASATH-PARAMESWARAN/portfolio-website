@@ -25,8 +25,6 @@ function initAll() {
 
 /* ============================================================
    THEME TOGGLE
-   Adds data-theme="dark"|"light" on <html>
-   Button injected into navbar
 ============================================================ */
 const THEME_KEY = "sp-theme";
 
@@ -54,7 +52,6 @@ function injectThemeBtn() {
   });
 }
 
-/* Dark is always default — only use saved pref if user explicitly set it */
 const savedTheme = localStorage.getItem(THEME_KEY) || "dark";
 document.documentElement.setAttribute("data-theme", savedTheme);
 if (document.readyState === "loading") {
@@ -66,8 +63,6 @@ if (document.readyState === "loading") {
 
 /* ============================================================
    GSAP CURTAIN WIPE PAGE TRANSITIONS
-   A gold panel sweeps in from the left covering the screen,
-   then the new page loads and the curtain pulls back out right.
 ============================================================ */
 let curtain = null;
 
@@ -105,7 +100,6 @@ function curtainExit() {
   );
 }
 
-/* Intercept all internal nav clicks */
 document.addEventListener("click", (e) => {
   const link = e.target.closest("a");
   if (!link) return;
@@ -120,9 +114,7 @@ document.addEventListener("click", (e) => {
   curtainEnter(() => { window.location.href = dest; });
 });
 
-/* On page load: curtain is already gone (new page), just reveal content */
 window.addEventListener("DOMContentLoaded", () => {
-  /* Animate page content in after curtain exits */
   const main = document.querySelector("main, .hero, .organizations, .volunteering, .certifications");
   if (main) {
     gsap.fromTo(main,
@@ -202,8 +194,7 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
 
 /* ============================================================
    DATA VISUALIZATION CANVAS BACKGROUND
-   Layers: ghost bar chart + scatter plot + line/area chart + axes
-   Gold-tinted, adapts to theme
+   Clustered bar chart (2 series) + connected lines + scatter + axes
 ============================================================ */
 (() => {
   const canvas = document.getElementById("net");
@@ -232,34 +223,132 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
     buildBars(); buildScatter(); buildLine(); buildAxes();
   }
 
-  /* ── Bar chart ── */
-  const bars = [];
+  /* ── Clustered Bar chart (2 series) + connected lines ── */
+  const barGroups = [];
+  const NUM_GROUPS = 18;
+
   function buildBars() {
-    bars.length = 0;
-    const bw = Math.min(W * 0.42, 420);
-    const bx0 = W - bw - W * 0.06;
-    const by0 = H * 0.64;
-    const gap = bw / 22;
-    for (let i = 0; i < 22; i++) {
-      const bh = 24 + Math.random() * H * 0.26;
-      bars.push({ x: bx0 + i * gap + gap * 0.15, w: gap * 0.52, baseH: bh,
-        phase: Math.random() * Math.PI * 2, speed: 0.004 + Math.random() * 0.007,
-        alpha: 0.12 + Math.random() * 0.14, floorY: by0 });
+    barGroups.length = 0;
+    const bw     = Math.min(W * 0.44, 460);
+    const bx0    = W - bw - W * 0.04;
+    const by0    = H * 0.66;
+    const maxH_A = H * 0.26;
+    const maxH_B = H * 0.18;
+    const groupW = bw / NUM_GROUPS;
+
+    for (let i = 0; i < NUM_GROUPS; i++) {
+      const gx   = bx0 + i * groupW;
+      const barW = groupW * 0.27;
+      const pad  = groupW * 0.07;
+
+      barGroups.push({
+        a: {
+          x: gx + pad,
+          w: barW,
+          baseH: 38 + Math.random() * maxH_A,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.006 + Math.random() * 0.008,
+          alpha: 0.14 + Math.random() * 0.08,
+          floorY: by0
+        },
+        b: {
+          x: gx + pad + barW + pad * 0.8,
+          w: barW,
+          baseH: 22 + Math.random() * maxH_B,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.006 + Math.random() * 0.008,
+          alpha: 0.08 + Math.random() * 0.06,
+          floorY: by0
+        }
+      });
     }
   }
-  function drawBars(t) {
-    for (const b of bars) {
-      const h = b.baseH + Math.sin(b.phase + t * b.speed * 60) * b.baseH * 0.16;
-      const y = b.floorY - h;
-      const gr = ctx.createLinearGradient(b.x, y, b.x, b.floorY);
-      gr.addColorStop(0, getGold(b.alpha + 0.12));
-      gr.addColorStop(1, getGold(0.01));
-      ctx.fillStyle = gr;
-      ctx.fillRect(b.x, y, b.w, h);
-      ctx.strokeStyle = getGold(b.alpha + 0.18);
-      ctx.lineWidth = 0.6;
-      ctx.beginPath(); ctx.moveTo(b.x, y); ctx.lineTo(b.x + b.w, y); ctx.stroke();
+
+  function getBarTop(bar, t) {
+    const h  = bar.baseH + Math.sin(bar.phase + t * bar.speed * 60) * bar.baseH * 0.07;
+    const cx = bar.x + bar.w / 2;
+    return { y: bar.floorY - h, h, cx };
+  }
+
+  function drawCatmullRom(pts, alpha, lineW) {
+    if (pts.length < 2) return;
+    ctx.strokeStyle = getGold(alpha);
+    ctx.lineWidth = lineW;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[Math.max(i - 1, 0)];
+      const p1 = pts[i];
+      const p2 = pts[i + 1];
+      const p3 = pts[Math.min(i + 2, pts.length - 1)];
+      const tension = 0.5;
+      const cp1x = p1.x + (p2.x - p0.x) * tension / 3;
+      const cp1y = p1.y + (p2.y - p0.y) * tension / 3;
+      const cp2x = p2.x - (p3.x - p1.x) * tension / 3;
+      const cp2y = p2.y - (p3.y - p1.y) * tension / 3;
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
     }
+    ctx.stroke();
+  }
+
+  function drawBars(t) {
+    /* ── draw the bars ── */
+    for (const g of barGroups) {
+      for (const [bar, isSeries_a] of [[g.a, true], [g.b, false]]) {
+        const { y, h } = getBarTop(bar, t);
+        const gr = ctx.createLinearGradient(bar.x, y, bar.x, bar.floorY);
+        gr.addColorStop(0,   getGold(bar.alpha + (isSeries_a ? 0.10 : 0.04)));
+        gr.addColorStop(0.6, getGold(bar.alpha * 0.4));
+        gr.addColorStop(1,   getGold(0.0));
+        ctx.fillStyle = gr;
+        ctx.fillRect(bar.x, y, bar.w, h);
+        ctx.strokeStyle = getGold(bar.alpha + (isSeries_a ? 0.18 : 0.08));
+        ctx.lineWidth = 0.7;
+        ctx.beginPath();
+        ctx.moveTo(bar.x, y);
+        ctx.lineTo(bar.x + bar.w, y);
+        ctx.stroke();
+      }
+    }
+
+    /* ── top-center points per series ── */
+    const ptsA = barGroups.map(g => { const { y, cx } = getBarTop(g.a, t); return { x: cx, y }; });
+    const ptsB = barGroups.map(g => { const { y, cx } = getBarTop(g.b, t); return { x: cx, y }; });
+
+    /* ── Catmull-Rom connecting lines ── */
+    drawCatmullRom(ptsA, 0.42, 1.2);
+    drawCatmullRom(ptsB, 0.20, 0.9);
+
+    /* ── dots at bar tops ── */
+    function drawDots(pts, dotR, dotAlpha) {
+      for (const p of pts) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, dotR + 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = getGold(dotAlpha * 0.12);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, dotR, 0, Math.PI * 2);
+        ctx.fillStyle = getGold(dotAlpha);
+        ctx.fill();
+      }
+    }
+    drawDots(ptsA, 2.0, 0.55);
+    drawDots(ptsB, 1.4, 0.30);
+
+    /* ── dashed vertical bridge between A and B per group ── */
+    ctx.setLineDash([2, 5]);
+    ctx.lineWidth = 0.4;
+    for (let i = 0; i < barGroups.length; i++) {
+      ctx.strokeStyle = getGold(0.09);
+      ctx.beginPath();
+      ctx.moveTo(ptsA[i].x, ptsA[i].y);
+      ctx.lineTo(ptsB[i].x, ptsB[i].y);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
   }
 
   /* ── Scatter plot ── */
@@ -298,7 +387,7 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
     }
   }
 
-  /* ── Line/area chart ── */
+  /* ── Bottom line/area chart ── */
   const lp = [];
   function buildLine() {
     lp.length = 0;
@@ -341,7 +430,7 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
     ctx.setLineDash([]);
   }
 
-  /* ── Mouse ── */
+  /* ── Mouse proximity highlight ── */
   const mouse = {x:-9999,y:-9999};
   window.addEventListener("mousemove",e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
 
@@ -361,7 +450,7 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
     }
   }
 
-  /* ── Loop ── */
+  /* ── Render loop ── */
   let last=0, lineT=0;
   function draw(ts) {
     lineT += (ts-last)/1000; last=ts;
@@ -377,8 +466,6 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
 
 /* ============================================================
    PROFILE CANVAS EFFECT
-   Default: radar sweep + dotted ring + pulse rings
-   On hover: data scatter dots drift outward
 ============================================================ */
 (() => {
   const canvas = document.getElementById('profileFx');
@@ -392,7 +479,6 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
   let hoverProgress = 0;
 
   function resize() {
-    const rect = wrap.getBoundingClientRect();
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     W = canvas.offsetWidth;
     H = canvas.offsetHeight;
@@ -411,7 +497,6 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
       : `rgba(201,168,76,${a})`;
   }
 
-  /* ── Scatter dots ── */
   const scatterDots = [];
   function buildScatter() {
     scatterDots.length = 0;
@@ -430,7 +515,6 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
     }
   }
 
-  /* ── Dotted orbit ring ── */
   let dotAngle = 0;
   function drawDottedRing(r, numDots, size, baseAlpha) {
     for (let i = 0; i < numDots; i++) {
@@ -445,7 +529,6 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
     }
   }
 
-  /* ── Radar sweep ── */
   let radarAngle = 0;
   function drawRadar(alpha) {
     if (alpha <= 0) return;
@@ -466,7 +549,6 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
     ctx.fill();
   }
 
-  /* ── Pulse rings ── */
   let pulseT = 0;
   function drawPulseRings(alpha) {
     if (alpha <= 0) return;
@@ -481,28 +563,21 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
     }
   }
 
-  /* ── Scatter effect ── */
   function drawScatter(progress) {
     if (progress <= 0) return;
     for (const d of scatterDots) {
       d.ox = Math.cos(d.phase + pulseT * d.speed * 8) * 3;
       d.oy = Math.sin(d.phase + pulseT * d.speed * 8) * 3;
-
       const currentDist = d.dist + (d.targetDist - d.dist) * progress;
       const x = cx + Math.cos(d.angle) * currentDist + d.ox;
       const y = cy + Math.sin(d.angle) * currentDist + d.oy;
-
-      /* faint line back to center */
       ctx.strokeStyle = gold(0.06 * progress);
       ctx.lineWidth   = 0.5;
       ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y); ctx.stroke();
-
       ctx.beginPath(); ctx.arc(x, y, d.r, 0, Math.PI * 2);
       ctx.fillStyle = gold(d.alpha * progress);
       ctx.fill();
     }
-
-    /* connect nearby dots */
     for (let i = 0; i < scatterDots.length; i++) {
       for (let j = i + 1; j < scatterDots.length; j++) {
         const a = scatterDots[i], b = scatterDots[j];
@@ -520,33 +595,24 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
     }
   }
 
-  /* ── Main loop ── */
   function draw() {
     ctx.clearRect(0, 0, W, H);
-
     radarAngle += 0.012;
     dotAngle   -= 0.006;
     pulseT     += 0.016;
-
-    /* smooth hover transition */
     const target = hovered ? 1 : 0;
     hoverProgress += (target - hoverProgress) * 0.06;
-
     const radarAlpha  = 1 - hoverProgress;
     const pulseAlpha  = 1 - hoverProgress * 0.7;
-
-    /* base circle */
     ctx.beginPath();
     ctx.arc(cx, cy, baseR, 0, Math.PI * 2);
     ctx.strokeStyle = gold(0.22);
     ctx.lineWidth = 1.5;
     ctx.stroke();
-
     drawRadar(radarAlpha);
     drawPulseRings(pulseAlpha);
     drawDottedRing(baseR + 10, 24, 1.5, 0.3 * (1 - hoverProgress * 0.5));
     drawScatter(hoverProgress);
-
     requestAnimationFrame(draw);
   }
 
@@ -563,7 +629,7 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
   draw();
 })();
 
-
+/* ── Nav toggle ── */
 const toggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector(".nav-links");
 if (toggle && navLinks) {
