@@ -54,6 +54,7 @@ function injectThemeBtn() {
   });
 }
 
+/* Dark is always default — only use saved pref if user explicitly set it */
 const savedTheme = localStorage.getItem(THEME_KEY) || "dark";
 document.documentElement.setAttribute("data-theme", savedTheme);
 if (document.readyState === "loading") {
@@ -243,7 +244,7 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
       const bh = 24 + Math.random() * H * 0.26;
       bars.push({ x: bx0 + i * gap + gap * 0.15, w: gap * 0.52, baseH: bh,
         phase: Math.random() * Math.PI * 2, speed: 0.004 + Math.random() * 0.007,
-        alpha: 0.05 + Math.random() * 0.06, floorY: by0 });
+        alpha: 0.12 + Math.random() * 0.14, floorY: by0 });
     }
   }
   function drawBars(t) {
@@ -251,11 +252,11 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
       const h = b.baseH + Math.sin(b.phase + t * b.speed * 60) * b.baseH * 0.16;
       const y = b.floorY - h;
       const gr = ctx.createLinearGradient(b.x, y, b.x, b.floorY);
-      gr.addColorStop(0, getGold(b.alpha + 0.04));
-      gr.addColorStop(1, getGold(0.005));
+      gr.addColorStop(0, getGold(b.alpha + 0.12));
+      gr.addColorStop(1, getGold(0.01));
       ctx.fillStyle = gr;
       ctx.fillRect(b.x, y, b.w, h);
-      ctx.strokeStyle = getGold(b.alpha + 0.07);
+      ctx.strokeStyle = getGold(b.alpha + 0.18);
       ctx.lineWidth = 0.6;
       ctx.beginPath(); ctx.moveTo(b.x, y); ctx.lineTo(b.x + b.w, y); ctx.stroke();
     }
@@ -272,7 +273,7 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
       const cy = H * (0.1  + (g * 0.25 + 0.12) * 0.5);
       scatter.push({ x: cx + (Math.random()-0.5)*W*0.12, y: cy + (Math.random()-0.5)*H*0.14,
         r: 1.2 + Math.random()*2, vx: (Math.random()-0.5)*0.16, vy: (Math.random()-0.5)*0.12,
-        alpha: 0.12 + Math.random()*0.25, group: g });
+        alpha: 0.3 + Math.random()*0.4, group: g });
     }
   }
   function drawScatter() {
@@ -307,12 +308,12 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
     const ox=W*0.12, ow=W*0.76, oy=H*0.83, oh=H*0.13;
     const pts=lp.map((p,i)=>({ x:ox+(i/(lp.length-1))*ow, y:oy-(p.base+Math.sin(p.phase+t*p.speed*60)*p.amp)*oh }));
     const ag=ctx.createLinearGradient(0,oy-oh,0,oy);
-    ag.addColorStop(0,getGold(0.06)); ag.addColorStop(1,getGold(0));
+    ag.addColorStop(0,getGold(0.14)); ag.addColorStop(1,getGold(0));
     ctx.fillStyle=ag;
     ctx.beginPath(); ctx.moveTo(pts[0].x,oy);
     pts.forEach(pt=>ctx.lineTo(pt.x,pt.y));
     ctx.lineTo(pts[pts.length-1].x,oy); ctx.closePath(); ctx.fill();
-    ctx.strokeStyle=getGold(0.18); ctx.lineWidth=1.1; ctx.lineJoin="round";
+    ctx.strokeStyle=getGold(0.4); ctx.lineWidth=1.5; ctx.lineJoin="round";
     ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
     for (let i=1;i<pts.length;i++) {
       const cpx=(pts[i-1].x+pts[i].x)/2;
@@ -325,8 +326,8 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
   const axes = [];
   function buildAxes() {
     axes.length=0;
-    for (let i=0;i<5;i++) axes.push({type:"h",y:H*(0.15+i*0.16),alpha:0.025+i*0.006});
-    for (let j=0;j<6;j++) axes.push({type:"v",x:W*(0.1+j*0.14),alpha:0.02});
+    for (let i=0;i<5;i++) axes.push({type:"h",y:H*(0.15+i*0.16),alpha:0.055+i*0.01});
+    for (let j=0;j<6;j++) axes.push({type:"v",x:W*(0.1+j*0.14),alpha:0.04});
   }
   function drawAxes() {
     ctx.setLineDash([2,10]);

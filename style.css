@@ -51,14 +51,14 @@
   --bg-card:     rgba(255,255,255,0.75);
   --bg-card-h:   rgba(255,255,255,0.95);
 
-  --gold:        #9a7230;
-  --gold-lt:     #c9a84c;
-  --gold-dk:     #7a5820;
-  --gold-glow:   rgba(154,114,48,0.18);
+  --gold:        #8a6220;
+  --gold-lt:     #b8922e;
+  --gold-dk:     #6a4810;
+  --gold-glow:   rgba(138,98,32,0.15);
 
-  --text:        #1a1408;
-  --muted:       rgba(26,20,8,0.65);
-  --slate:       #7a6848;
+  --text:        #0e0a02;
+  --muted:       rgba(14,10,2,0.7);
+  --slate:       #5a4e38;
 
   --border:      rgba(26,20,8,0.1);
   --border-g:    rgba(154,114,48,0.25);
@@ -101,9 +101,9 @@ a, a:visited, a:hover, a:active { text-decoration: none; }
   position: fixed; inset: 0;
   width: 100vw; height: 100vh;
   pointer-events: none; z-index: 1;
-  opacity: 0.9;
+  opacity: 1;
 }
-[data-theme="light"] #net { opacity: 0.45; }
+[data-theme="light"] #net { opacity: 0.65; }
 
 /* ============================================================
    NAVBAR
@@ -231,6 +231,8 @@ a, a:visited, a:hover, a:active { text-decoration: none; }
   font-weight: 800; color: var(--gold); letter-spacing: 0.02em;
   white-space: nowrap;
 }
+[data-theme="light"] .name-first { color: #0e0a02; }
+[data-theme="light"] .name-last  { color: #8a6220; }
 
 .hero-role {
   display: flex; align-items: center; gap: 10px;
