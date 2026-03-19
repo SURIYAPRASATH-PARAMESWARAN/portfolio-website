@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Skills | Suriya P</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="./style.css" />
 </head>
@@ -13,132 +14,31 @@
     <a href="./index.html" class="logo">SURIYA P</a>
     <button class="nav-toggle"><span></span><span></span><span></span></button>
     <ul class="nav-links">
-      <li><a href="./index.html">Home</a></li>
-      <li><a href="./about-me.html">About Me</a></li>
-      <li><a href="./projects.html">Projects</a></li>
-      <li><a href="./skills.html" class="active">Skills</a></li>
+      <li><a href="./index.html">Home</a></li><li><a href="./about-me.html">About Me</a></li>
+      <li><a href="./projects.html">Projects</a></li><li><a href="./skills.html" class="active">Skills</a></li>
       <li><a href="./contact.html">Contact</a></li>
-      <li class="dropdown">
-        <span class="dropbtn">More <span class="caret">▾</span></span>
+      <li class="dropdown"><span class="dropbtn">More <span class="caret">▾</span></span>
         <ul class="dropdown-menu">
-          <li><a href="./education.html">Education</a></li>
-          <li><a href="./certifications.html">Certifications</a></li>
-          <li><a href="./volunteering.html">Volunteering</a></li>
-          <li><a href="./organizations.html">Organizations</a></li>
+          <li><a href="./education.html">Education</a></li><li><a href="./certifications.html">Certifications</a></li>
+          <li><a href="./volunteering.html">Volunteering</a></li><li><a href="./organizations.html">Organizations</a></li>
         </ul>
       </li>
     </ul>
   </nav>
-
   <main class="page-container">
     <section class="skills-page">
       <h1>Skills &amp; Technologies</h1>
       <p class="skills-intro">Grouped by capability — focused on production-style data systems, decision engines, and real-world tooling.</p>
-
-      <div class="skill-block">
-        <h2><i class="fa-solid fa-code"></i> Programming</h2>
-        <div class="chip-row">
-          <span class="chip blue">Python</span>
-          <span class="chip purple">SQL</span>
-          <span class="chip dark">R</span>
-          <span class="chip yellow">JavaScript</span>
-          <span class="chip dark">HTML</span>
-          <span class="chip dark">CSS</span>
-        </div>
-      </div>
-
-      <div class="skill-block">
-        <h2><i class="fa-solid fa-brain"></i> Machine Learning &amp; Statistics</h2>
-        <div class="chip-row">
-          <span class="chip dark">Machine Learning</span>
-          <span class="chip dark">Statistical Analysis</span>
-          <span class="chip dark">Scikit-Learn</span>
-          <span class="chip dark">XGBoost</span>
-          <span class="chip dark">LightGBM</span>
-          <span class="chip dark">Bayesian Networks</span>
-          <span class="chip dark">A/B Testing</span>
-          <span class="chip dark">Feature Engineering</span>
-          <span class="chip dark">Anomaly Detection</span>
-        </div>
-      </div>
-
-      <div class="skill-block">
-        <h2><i class="fa-solid fa-microchip"></i> Deep Learning &amp; NLP</h2>
-        <div class="chip-row">
-          <span class="chip red">PyTorch</span>
-          <span class="chip dark">Deep Learning</span>
-          <span class="chip dark">LSTM</span>
-          <span class="chip dark">Transformers</span>
-          <span class="chip dark">NLP</span>
-          <span class="chip dark">LLMs</span>
-        </div>
-      </div>
-
-      <div class="skill-block">
-        <h2><i class="fa-solid fa-chart-line"></i> Data Analysis &amp; Visualization</h2>
-        <div class="chip-row">
-          <span class="chip dark">Pandas</span>
-          <span class="chip dark">NumPy</span>
-          <span class="chip dark">Matplotlib</span>
-          <span class="chip dark">Seaborn</span>
-          <span class="chip dark">Plotly</span>
-          <span class="chip dark">Time Series Analysis</span>
-          <span class="chip dark">Forecasting</span>
-          <span class="chip blue">Power BI</span>
-          <span class="chip dark">Tableau</span>
-          <span class="chip teal">Streamlit</span>
-        </div>
-      </div>
-
-      <div class="skill-block">
-        <h2><i class="fa-solid fa-screwdriver-wrench"></i> Data Engineering &amp; Tools</h2>
-        <div class="chip-row">
-          <span class="chip dark">ETL</span>
-          <span class="chip dark">Informatica</span>
-          <span class="chip dark">MLflow</span>
-          <span class="chip dark">MySQL</span>
-          <span class="chip dark">PostgreSQL</span>
-          <span class="chip dark">Git</span>
-          <span class="chip dark">Docker</span>
-          <span class="chip dark">Linux</span>
-          <span class="chip dark">VS Code</span>
-        </div>
-      </div>
-
-      <div class="skill-block">
-        <h2><i class="fa-solid fa-cloud"></i> Cloud Platforms</h2>
-        <div class="chip-row">
-          <span class="chip orange">AWS</span>
-          <span class="chip dark">AWS S3</span>
-          <span class="chip dark">AWS Lambda</span>
-          <span class="chip dark">AWS Athena</span>
-          <span class="chip blue">Google Cloud</span>
-          <span class="chip dark">BigQuery</span>
-          <span class="chip yellow">Firebase</span>
-        </div>
-      </div>
-
-      <div class="skill-block">
-        <h2><i class="fa-solid fa-server"></i> Backend, APIs &amp; Web</h2>
-        <div class="chip-row">
-          <span class="chip teal">FastAPI</span>
-          <span class="chip green">Node.js</span>
-          <span class="chip dark">Express</span>
-          <span class="chip teal">React</span>
-          <span class="chip dark">REST APIs</span>
-          <span class="chip dark">GraphQL</span>
-          <span class="chip dark">JWT</span>
-          <span class="chip dark">Kafka</span>
-        </div>
-      </div>
-
+      <div class="skill-block"><h2><i class="fa-solid fa-code"></i> Programming</h2><div class="chip-row"><span class="chip blue">Python</span><span class="chip purple">SQL</span><span class="chip dark">R</span><span class="chip yellow">JavaScript</span><span class="chip dark">HTML</span><span class="chip dark">CSS</span></div></div>
+      <div class="skill-block"><h2><i class="fa-solid fa-brain"></i> Machine Learning &amp; Statistics</h2><div class="chip-row"><span class="chip dark">Machine Learning</span><span class="chip dark">Statistical Analysis</span><span class="chip dark">Scikit-Learn</span><span class="chip dark">XGBoost</span><span class="chip dark">LightGBM</span><span class="chip dark">Bayesian Networks</span><span class="chip dark">A/B Testing</span><span class="chip dark">Feature Engineering</span><span class="chip dark">Anomaly Detection</span></div></div>
+      <div class="skill-block"><h2><i class="fa-solid fa-microchip"></i> Deep Learning &amp; NLP</h2><div class="chip-row"><span class="chip red">PyTorch</span><span class="chip dark">Deep Learning</span><span class="chip dark">LSTM</span><span class="chip dark">Transformers</span><span class="chip dark">NLP</span><span class="chip dark">LLMs</span></div></div>
+      <div class="skill-block"><h2><i class="fa-solid fa-chart-line"></i> Data Analysis &amp; Visualization</h2><div class="chip-row"><span class="chip dark">Pandas</span><span class="chip dark">NumPy</span><span class="chip dark">Matplotlib</span><span class="chip dark">Seaborn</span><span class="chip dark">Plotly</span><span class="chip dark">Time Series Analysis</span><span class="chip dark">Forecasting</span><span class="chip blue">Power BI</span><span class="chip dark">Tableau</span><span class="chip teal">Streamlit</span></div></div>
+      <div class="skill-block"><h2><i class="fa-solid fa-screwdriver-wrench"></i> Data Engineering &amp; Tools</h2><div class="chip-row"><span class="chip dark">ETL</span><span class="chip dark">Informatica</span><span class="chip dark">MLflow</span><span class="chip dark">MySQL</span><span class="chip dark">PostgreSQL</span><span class="chip dark">Git</span><span class="chip dark">Docker</span><span class="chip dark">Linux</span><span class="chip dark">VS Code</span></div></div>
+      <div class="skill-block"><h2><i class="fa-solid fa-cloud"></i> Cloud Platforms</h2><div class="chip-row"><span class="chip orange">AWS</span><span class="chip dark">AWS S3</span><span class="chip dark">AWS Lambda</span><span class="chip dark">AWS Athena</span><span class="chip blue">Google Cloud</span><span class="chip dark">BigQuery</span><span class="chip yellow">Firebase</span></div></div>
+      <div class="skill-block"><h2><i class="fa-solid fa-server"></i> Backend, APIs &amp; Web</h2><div class="chip-row"><span class="chip teal">FastAPI</span><span class="chip green">Node.js</span><span class="chip dark">Express</span><span class="chip teal">React</span><span class="chip dark">REST APIs</span><span class="chip dark">GraphQL</span><span class="chip dark">JWT</span><span class="chip dark">Kafka</span></div></div>
     </section>
   </main>
-
-  <footer>
-    <p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p>
-  </footer>
-
+  <footer><p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p></footer>
   <script src="./script.js" defer></script>
 </body>
 </html>

@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SURIYA P | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <canvas id="net"></canvas>
+
   <nav class="navbar">
     <a href="./index.html" class="logo">SURIYA P</a>
     <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -32,33 +36,19 @@
 
   <section class="hero">
     <div class="hero-content">
-
-      <!-- Greeting line like Pradeep's -->
       <p class="hero-greeting">Hello, I'm</p>
-
-      <!-- Name broken into lines with animated colour shift -->
       <h1 class="hero-name">
-        <span class="name-line">
-          <span class="name-word static">SURIYA</span>
-          <span class="name-word shift"> PRASATH</span>
-        </span>
-        <span class="name-line">
-          <span class="name-word shift2">PARAMESWARAN</span>
-        </span>
+        <span class="name-first">SURIYA PRASATH</span>
+        <span class="name-last">PARAMESWARAN</span>
       </h1>
-
-      <!-- Typing line (role) -->
-      <p class="typing-line">
-        <span id="typing-text"></span>
-        <span class="typing-caret">|</span>
-      </p>
-
-      <!-- Bio — no box, just breathing text like Pradeep -->
+      <div class="hero-role">
+        <span class="role-dash"></span>
+        <span id="typing-text"></span><span class="typing-caret">|</span>
+      </div>
       <p class="hero-bio">
         Specializing in decision-focused machine learning, risk modeling,
         and business intelligence systems built on real-world data.
       </p>
-
       <div class="hero-buttons">
         <a href="./assets/resume/Suriya_Resume.pdf" class="cta-button" download>
           <i class="fa-solid fa-download"></i> Download Resume
@@ -70,23 +60,28 @@
           <i class="fa-solid fa-paper-plane"></i> Contact Me
         </a>
       </div>
-
       <div class="hero-social">
         <a href="https://github.com/SURIYAPRASATH-PARAMESWARAN" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/suriyaprasathp" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://www.linkedin.com/in/suriyaprasathp" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
       </div>
     </div>
-
-    <!-- Profile with rotating rings -->
     <div class="hero-image">
       <div class="profile-ring-wrap">
-        <div class="ring ring-1"></div>
-        <div class="ring ring-2"></div>
-        <div class="ring ring-3"></div>
-        <img src="./profile.jpg" alt="Suriya Profile" class="profile-img">
+        <canvas id="profileFx" class="profile-canvas"></canvas>
+        <img src="./profile.jpg" alt="Suriya Prasath Parameswaran" class="profile-img">
       </div>
     </div>
   </section>
+
+  <div class="hero-stats">
+    <div class="stat-item"><span class="stat-num">8+</span><span class="stat-label">Projects</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-num">5+</span><span class="stat-label">Certifications</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-num">3+</span><span class="stat-label">Years Experience</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-num">12+</span><span class="stat-label">Technologies</span></div>
+  </div>
 
   <footer>
     <p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p>
@@ -103,12 +98,8 @@
       <div class="resume-header">
         <h3>Resume</h3>
         <div class="resume-actions">
-          <a class="resume-download" href="./assets/resume/Suriya_Resume.pdf?v=2" download>
-            <i class="fa-solid fa-download"></i> Download
-          </a>
-          <button class="resume-close" type="button" aria-label="Close" data-close="true">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+          <a class="resume-download" href="./assets/resume/Suriya_Resume.pdf?v=2" download><i class="fa-solid fa-download"></i> Download</a>
+          <button class="resume-close" type="button" aria-label="Close" data-close="true"><i class="fa-solid fa-xmark"></i></button>
         </div>
       </div>
       <div class="resume-body">

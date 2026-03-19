@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Me | Suriya P</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
   <canvas id="net"></canvas>
-
   <nav class="navbar">
     <a href="./index.html" class="logo">SURIYA P</a>
     <button class="nav-toggle"><span></span><span></span><span></span></button>
@@ -20,7 +21,7 @@
       <li><a href="./skills.html">Skills</a></li>
       <li><a href="./contact.html">Contact</a></li>
       <li class="dropdown">
-        <span class="dropbtn">More ▾</span>
+        <span class="dropbtn">More <span class="caret">▾</span></span>
         <ul class="dropdown-menu">
           <li><a href="./education.html">Education</a></li>
           <li><a href="./certifications.html">Certifications</a></li>
@@ -30,18 +31,14 @@
       </li>
     </ul>
   </nav>
-
   <main class="page-container">
-
     <section class="about-section">
       <h1>About Me</h1>
-      <p>I am a Data Science and Analytics graduate focused on building production-style, decision-driven machine learning systems. My work emphasizes real-world impact, ROI-aware modeling, and operational constraints rather than purely academic accuracy.</p>
-      <p>I enjoy translating complex data into clear, actionable insights that support strategic decision-making. I hold an MSc in Data Science and Analytics from the University of Leeds and have worked on projects and collaborations that optimize business operations, improve decision quality, and drive data-informed strategies.</p>
+      <p>I'm a Data Science and Analytics graduate from the University of Leeds, currently focused on machine learning, risk modelling, and building data systems that actually help people make better decisions.</p>
+      <p>I've worked on projects spanning NLP, fraud detection, revenue forecasting, and churn analysis — mostly stuff where the goal is a useful output, not just a good accuracy score. I also have hands-on experience from internships in ETL engineering and IoT analytics.</p>
     </section>
-
     <section class="experience-section">
       <h2>Experience</h2>
-
       <div class="experience-item">
         <h3>Cognizant Technology Solutions — Chennai, India</h3>
         <span class="role">ETL &amp; Data Engineering Intern | Jul 2022 – Dec 2022</span>
@@ -51,7 +48,6 @@
           <li>Assisted data engineering teams in monitoring ETL job runs, identifying data quality issues, and supporting fixes to maintain stable data pipelines.</li>
         </ul>
       </div>
-
       <div class="experience-item">
         <h3>Shree Kay Vee Automation — Chennai, India</h3>
         <span class="role">IoT &amp; Analytics Intern | Jan 2023 – Apr 2023</span>
@@ -62,20 +58,16 @@
           <li>Supported the development of data ingestion and processing scripts used in internal analytics workflows.</li>
         </ul>
       </div>
-
     </section>
-
   </main>
-
   <footer>
     <p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p>
     <div class="social-links">
-      <a href="https://github.com/SURIYAPRASATH-PARAMESWARAN" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/suriyaprasathp" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-      <a href="mailto:suriyavictor6@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://github.com/SURIYAPRASATH-PARAMESWARAN" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/suriyaprasathp" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="mailto:suriyavictor6@gmail.com"><i class="fa-solid fa-envelope"></i></a>
     </div>
   </footer>
-
   <script src="./script.js" defer></script>
 </body>
 </html>
