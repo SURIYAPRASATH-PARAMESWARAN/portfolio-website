@@ -9,9 +9,204 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./style.css">
+
+  <style>
+    /* ── EXPLOSION WIDGET ── */
+    /* navbar handled by style.css — position:fixed, z-index:9999 */
+
+    .profile-ring-wrap {
+      position: relative;
+      cursor: pointer;
+    }
+
+    #blast-layer {
+      position: absolute;
+      inset: -300px;
+      z-index: 1;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    #explosion-canvas {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .profile-canvas { position: absolute; z-index: 3; }
+    .profile-img {
+      position: relative; z-index: 4;
+      /* width/height controlled by style.css via profile-ring-wrap */
+    }
+    .profile-img:hover { transform: scale(1.04); }
+    .profile-img.exploding { animation: picShake 0.35s ease; }
+    @keyframes picShake {
+      0%,100%{transform:scale(1)} 20%{transform:scale(1.15)}
+      50%{transform:scale(0.93)} 80%{transform:scale(1.08)}
+    }
+
+    .ex-particle {
+      position: absolute;
+      pointer-events: none;
+      border-radius: 10px;
+      overflow: visible;
+    }
+
+    .ex-stat-bubble {
+      position: absolute;
+      pointer-events: none;
+      background: rgba(10,11,14,0.92); border: 1px solid #c9a84c;
+      color: #c9a84c; font-family: 'DM Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      padding: 4px 12px; border-radius: 20px; white-space: nowrap;
+      box-shadow: 0 0 12px rgba(201,168,76,0.3); letter-spacing: 0.04em;
+    }
+
+    .ex-pulse-ring {
+      position: absolute; inset: -6px; border-radius: 50%;
+      border: 2px solid rgba(201,168,76,0.6);
+      pointer-events: none; opacity: 0;
+      z-index: 2;
+    }
+    .ex-pulse-ring.fire { animation: exPulse 0.55s ease-out forwards; }
+    @keyframes exPulse {
+      0%   { transform: scale(1);   opacity: 1; }
+      100% { transform: scale(2.6); opacity: 0; }
+    }
+
+    /* Dashed orbit ring */
+    .profile-ring-wrap::after {
+      content: '';
+      position: absolute; inset: -14px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(201,168,76,0.28);
+      pointer-events: none;
+      z-index: 5;
+      animation: rotateRing 12s linear infinite;
+    }
+    @keyframes rotateRing {
+      to { transform: rotate(360deg); }
+    }
+
+    #orbit-dot {
+      position: absolute;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: #c9a84c;
+      box-shadow: 0 0 8px #c9a84c, 0 0 16px rgba(201,168,76,0.5);
+      pointer-events: none;
+      z-index: 6;
+      top: 50%; left: 50%;
+      margin: -4.5px 0 0 -4.5px;
+      animation: orbitDot 12s linear infinite;
+    }
+    /* radius = half of max photo size (180) + ring gap (18) = 198px */
+    @keyframes orbitDot {
+      0%   { transform: rotate(0deg)   translateY(-172px) rotate(0deg);   }
+      100% { transform: rotate(360deg) translateY(-172px) rotate(-360deg); }
+    }
+
+    /* ── FULL-WIDTH STATS BAR ── */
+    .stats-bar {
+      width: 100%;
+      background: rgba(201,168,76,0.03);
+      border-top: 1px solid rgba(201,168,76,0.12);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 36px clamp(24px,5vw,80px);
+    }
+    .stats-bar .s-item {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; padding: 0 20px;
+      position: relative;
+    }
+    .stats-bar .s-item + .s-item::before {
+      content: '';
+      position: absolute; left: 0; top: 50%;
+      transform: translateY(-50%);
+      height: 48px; width: 1px;
+      background: rgba(201,168,76,0.15);
+    }
+    .stats-bar .s-num {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800; color: #c9a84c; line-height: 1;
+    }
+    .stats-bar .s-label {
+      font-size: 0.72rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #6b6455;
+      font-weight: 500; text-align: center;
+    }
+
+    /* ── RICH FOOTER ── */
+    .site-footer {
+      background: #070810;
+      border-top: 1px solid rgba(201,168,76,0.12);
+      padding: 48px clamp(24px,5vw,80px) 0;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+    .footer-logo {
+      font-family: 'Syne', serif;
+      font-size: 1.1rem; font-weight: 800;
+      letter-spacing: 0.1em; color: #c9a84c;
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    .footer-tagline {
+      font-size: 0.82rem; color: #5a5449; line-height: 1.7;
+      max-width: 300px; font-weight: 300;
+    }
+    .footer-socials {
+      display: flex; gap: 10px; margin-top: 18px;
+    }
+    .footer-socials a {
+      width: 34px; height: 34px; border-radius: 7px;
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: #6b6455; text-decoration: none;
+      transition: all 0.2s; font-size: 0.85rem;
+    }
+    .footer-socials a:hover { border-color: #c9a84c; color: #c9a84c; background: rgba(201,168,76,0.07); }
+    .footer-col-title {
+      font-size: 0.7rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #c9a84c;
+      font-weight: 600; margin-bottom: 16px;
+    }
+    .footer-links-group ul {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .footer-links-group ul li a {
+      font-size: 0.85rem; color: #5a5449;
+      text-decoration: none; font-weight: 400;
+      transition: color 0.2s; letter-spacing: 0.02em;
+    }
+    .footer-links-group ul li a:hover { color: #c9a84c; }
+    .footer-bottom {
+      padding: 18px 0;
+      text-align: center;
+    }
+    .footer-bottom p {
+      font-size: 0.75rem; color: #3a3530;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 640px) {
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 24px 0; }
+    }
+  </style>
 </head>
 <body>
   <canvas id="net"></canvas>
+  <canvas id="explosion-canvas"></canvas>
 
   <nav class="navbar">
     <a href="./index.html" class="logo">SURIYA P</a>
@@ -65,30 +260,70 @@
         <a href="https://www.linkedin.com/in/suriyaprasathp" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
       </div>
     </div>
+
     <div class="hero-image">
-      <div class="profile-ring-wrap">
+      <div class="profile-ring-wrap" id="profile-wrap">
+        <div id="blast-layer"></div>
         <canvas id="profileFx" class="profile-canvas"></canvas>
-        <img src="./profile.jpg" alt="Suriya Prasath Parameswaran" class="profile-img">
+        <div class="ex-pulse-ring" id="ex-pulse-ring"></div>
+        <div id="orbit-dot"></div>
+        <img src="./profile.jpg" alt="Suriya Prasath Parameswaran" class="profile-img" id="profile-img">
       </div>
     </div>
   </section>
 
-  <div class="hero-stats">
-    <div class="stat-item"><span class="stat-num">8+</span><span class="stat-label">Projects</span></div>
-    <div class="stat-divider"></div>
-    <div class="stat-item"><span class="stat-num">5+</span><span class="stat-label">Certifications</span></div>
-    <div class="stat-divider"></div>
-    <div class="stat-item"><span class="stat-num">1</span><span class="stat-label">Years Experience</span></div>
-    <div class="stat-divider"></div>
-    <div class="stat-item"><span class="stat-num">30+</span><span class="stat-label">Technologies</span></div>
+  <!-- ── FULL-WIDTH STATS BAR ── -->
+  <div class="stats-bar">
+    <div class="s-item">
+      <span class="s-num">8+</span>
+      <span class="s-label">Projects</span>
+    </div>
+    <div class="s-item">
+      <span class="s-num">5+</span>
+      <span class="s-label">Certifications</span>
+    </div>
+    <div class="s-item">
+      <span class="s-num">1</span>
+      <span class="s-label">Years Experience</span>
+    </div>
+    <div class="s-item">
+      <span class="s-num">30+</span>
+      <span class="s-label">Technologies</span>
+    </div>
   </div>
 
-  <footer>
-    <p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p>
-    <div class="social-links">
-      <a href="https://github.com/SURIYAPRASATH-PARAMESWARAN" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/suriyaprasathp" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-      <a href="mailto:suriyavictor6@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">SURIYA P</div>
+        <p class="footer-tagline">Data Scientist &amp; ML Engineer specializing in decision-focused machine learning, risk modeling, and business intelligence systems.</p>
+        <div class="footer-socials">
+          <a href="https://github.com/SURIYAPRASATH-PARAMESWARAN" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/suriyaprasathp" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="mailto:suriyavictor6@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer-links-group">
+        <h4 class="footer-col-title">Quick Links</h4>
+        <ul>
+          <li><a href="./about-me.html">About Me</a></li>
+          <li><a href="./projects.html">Projects</a></li>
+          <li><a href="./skills.html">Skills</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-group">
+        <h4 class="footer-col-title">More</h4>
+        <ul>
+          <li><a href="./education.html">Education</a></li>
+          <li><a href="./certifications.html">Certifications</a></li>
+          <li><a href="./volunteering.html">Volunteering</a></li>
+          <li><a href="./organizations.html">Organizations</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p>
     </div>
   </footer>
 
@@ -109,5 +344,239 @@
   </div>
 
   <script src="./script.js" defer></script>
+
+  <!-- ── EXPLOSION WIDGET ── -->
+  <script>
+  (function () {
+    const GOLD = '#c9a84c', GOLD2 = '#e8c96b';
+    const PALETTES = [
+      ['#c9a84c','#3b82f6','#22c55e','#f43f5e','#a78bfa'],
+      ['#e8c96b','#38bdf8','#4ade80','#fb7185','#c084fc'],
+      ['#fbbf24','#34d399','#60a5fa','#f472b6','#a3e635'],
+      ['#c9a84c','#e8c96b','#a07830','#f0d98a','#fffbe0'],
+    ];
+    const CHART_TYPES = ['bar','hbar','donut','line','area','scatter','radar','bubble'];
+    const STAT_LABELS = [
+      '8+ Projects','5+ Certs','30+ Tools','1yr Exp',
+      'Python','ML Expert','Risk Models','BI Systems',
+      'TensorFlow','Power BI','SQL','Scikit-learn',
+      'Data Science','Deep Learning','Azure','Pandas'
+    ];
+
+    const exCanvas = document.getElementById('explosion-canvas');
+    const exCtx = exCanvas.getContext('2d');
+    const profileImg = document.getElementById('profile-img');
+    const profileWrap = document.getElementById('profile-wrap');
+    const blastLayer = document.getElementById('blast-layer');
+    const pulseRing = document.getElementById('ex-pulse-ring');
+
+    let sparks = [], physParticles = [];
+    let sparkAnimId = null, physAnimId = null;
+
+    function resize() { exCanvas.width = window.innerWidth; exCanvas.height = window.innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+
+    function getViewportCenter() {
+      const r = profileImg.getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    }
+
+    function getBlastCenter() {
+      const bl = blastLayer.getBoundingClientRect();
+      const pi = profileImg.getBoundingClientRect();
+      return {
+        x: pi.left + pi.width  / 2 - bl.left,
+        y: pi.top  + pi.height / 2 - bl.top
+      };
+    }
+
+    function roundRect(c, x, y, w, h, r) {
+      c.beginPath();
+      c.moveTo(x+r,y); c.lineTo(x+w-r,y); c.arcTo(x+w,y,x+w,y+r,r);
+      c.lineTo(x+w,y+h-r); c.arcTo(x+w,y+h,x+w-r,y+h,r);
+      c.lineTo(x+r,y+h); c.arcTo(x,y+h,x,y+h-r,r);
+      c.lineTo(x,y+r); c.arcTo(x,y,x+r,y,r); c.closePath();
+    }
+
+    function drawChart(c, type, sz, pal) {
+      function rnd(a,b){return a+Math.random()*(b-a);}
+      function arr(n,a,b){return Array.from({length:n},()=>Math.round(rnd(a,b)));}
+
+      c.fillStyle='rgba(10,11,18,0.93)'; roundRect(c,0,0,sz,sz,10); c.fill();
+      c.strokeStyle=GOLD; c.lineWidth=1; roundRect(c,0,0,sz,sz,10); c.stroke();
+      c.fillStyle=GOLD; c.font=`bold ${Math.round(sz*0.1)}px DM Sans,sans-serif`; c.textAlign='center';
+
+      if(type==='bar'){
+        const d=arr(5,10,90),mx=Math.max(...d),bw=sz*0.1,gap=sz*0.05,sx=sz*0.1,bh=sz*0.55,by=sz*0.82;
+        d.forEach((v,i)=>{const x=sx+i*(bw+gap),h=(v/mx)*bh;c.fillStyle=pal[i%5];c.globalAlpha=0.88;roundRect(c,x,by-h,bw,h,2);c.fill();});
+        c.globalAlpha=1; c.fillStyle=GOLD; c.fillText('BAR',sz/2,sz*0.12);
+      } else if(type==='hbar'){
+        const d=arr(4,15,95),mx=Math.max(...d),bh=sz*0.1,sx=sz*0.16,gy=sz*0.07;
+        d.forEach((v,i)=>{const y=sz*0.22+i*(bh+gy),w=(v/mx)*(sz*0.73);c.fillStyle=pal[i%5];c.globalAlpha=0.88;roundRect(c,sx,y,w,bh,2);c.fill();});
+        c.globalAlpha=1; c.fillStyle=GOLD; c.fillText('H-BAR',sz/2,sz*0.12);
+      } else if(type==='donut'){
+        const d=[32,24,18,14,12];let sa=-Math.PI/2;const cx=sz/2,cy=sz*0.54,r=sz*0.32,ir=sz*0.18;
+        d.forEach((v,i)=>{const sl=(v/100)*Math.PI*2;c.beginPath();c.moveTo(cx,cy);c.arc(cx,cy,r,sa,sa+sl);c.closePath();c.fillStyle=pal[i];c.globalAlpha=0.9;c.fill();sa+=sl;});
+        c.globalAlpha=1;c.beginPath();c.arc(cx,cy,ir,0,Math.PI*2);c.fillStyle='rgba(10,11,18,0.96)';c.fill();
+        c.fillStyle=GOLD; c.fillText('DONUT',sz/2,sz*0.12);
+      } else if(type==='line'){
+        const d=arr(6,15,85),mx=Math.max(...d)+5;
+        const pts=d.map((v,i)=>({x:sz*0.1+i*(sz*0.8/5),y:sz*0.82-((v/mx)*(sz*0.6))}));
+        c.beginPath();c.moveTo(pts[0].x,sz*0.82);pts.forEach(p=>c.lineTo(p.x,p.y));c.lineTo(pts[pts.length-1].x,sz*0.82);c.closePath();c.fillStyle=pal[0];c.globalAlpha=0.15;c.fill();
+        c.beginPath();c.moveTo(pts[0].x,pts[0].y);pts.forEach(p=>c.lineTo(p.x,p.y));c.strokeStyle=pal[0];c.lineWidth=2;c.globalAlpha=0.9;c.stroke();
+        pts.forEach(p=>{c.beginPath();c.arc(p.x,p.y,3,0,Math.PI*2);c.fillStyle=pal[1];c.globalAlpha=1;c.fill();});
+        c.globalAlpha=1; c.fillStyle=GOLD; c.fillText('LINE',sz/2,sz*0.12);
+      } else if(type==='area'){
+        const n=8,d1=arr(n,20,80),d2=arr(n,10,60),mx=95;
+        [[d1,pal[2]],[d2,pal[0]]].forEach(([d,col])=>{
+          const pts=d.map((v,i)=>({x:sz*0.08+i*(sz*0.84/(n-1)),y:sz*0.82-((v/mx)*(sz*0.6))}));
+          c.beginPath();c.moveTo(pts[0].x,sz*0.82);pts.forEach(p=>c.lineTo(p.x,p.y));c.lineTo(pts[pts.length-1].x,sz*0.82);c.closePath();c.fillStyle=col;c.globalAlpha=0.18;c.fill();
+          c.beginPath();c.moveTo(pts[0].x,pts[0].y);pts.forEach(p=>c.lineTo(p.x,p.y));c.strokeStyle=col;c.lineWidth=1.5;c.globalAlpha=0.85;c.stroke();
+        });
+        c.globalAlpha=1; c.fillStyle=GOLD; c.fillText('AREA',sz/2,sz*0.12);
+      } else if(type==='scatter'){
+        Array.from({length:22},()=>({x:sz*0.1+Math.random()*sz*0.8,y:sz*0.18+Math.random()*sz*0.7})).forEach((p,i)=>{
+          c.beginPath();c.arc(p.x,p.y,2.5+Math.random()*4,0,Math.PI*2);c.fillStyle=pal[i%5];c.globalAlpha=0.8;c.fill();
+        });
+        c.globalAlpha=1; c.fillStyle=GOLD; c.fillText('SCATTER',sz/2,sz*0.12);
+      } else if(type==='radar'){
+        const n=6,d=arr(n,30,95),cx=sz/2,cy=sz*0.56,r=sz*0.33;
+        [1,0.67,0.33].forEach(f=>{
+          c.beginPath();for(let i=0;i<n;i++){const a=-Math.PI/2+(i/n)*Math.PI*2,p={x:cx+Math.cos(a)*r*f,y:cy+Math.sin(a)*r*f};i===0?c.moveTo(p.x,p.y):c.lineTo(p.x,p.y);}
+          c.closePath();c.strokeStyle='rgba(201,168,76,0.2)';c.lineWidth=0.5;c.stroke();
+        });
+        c.beginPath();d.forEach((v,i)=>{const a=-Math.PI/2+(i/n)*Math.PI*2,rr=(v/100)*r,p={x:cx+Math.cos(a)*rr,y:cy+Math.sin(a)*rr};i===0?c.moveTo(p.x,p.y):c.lineTo(p.x,p.y);});
+        c.closePath();c.fillStyle=pal[0];c.globalAlpha=0.25;c.fill();c.strokeStyle=pal[0];c.lineWidth=1.5;c.globalAlpha=0.9;c.stroke();
+        c.globalAlpha=1; c.fillStyle=GOLD; c.fillText('RADAR',sz/2,sz*0.1);
+      } else if(type==='bubble'){
+        Array.from({length:10},()=>({x:sz*0.15+Math.random()*sz*0.7,y:sz*0.2+Math.random()*sz*0.65,r:4+Math.random()*16})).forEach((b,i)=>{
+          c.beginPath();c.arc(b.x,b.y,b.r,0,Math.PI*2);c.fillStyle=pal[i%5];c.globalAlpha=0.55;c.fill();
+          c.strokeStyle=pal[i%5];c.lineWidth=1;c.globalAlpha=0.85;c.stroke();
+        });
+        c.globalAlpha=1; c.fillStyle=GOLD; c.fillText('BUBBLE',sz/2,sz*0.12);
+      }
+    }
+
+    function makeChartEl(cx, cy) {
+      const type = CHART_TYPES[Math.floor(Math.random()*CHART_TYPES.length)];
+      const pal = PALETTES[Math.floor(Math.random()*PALETTES.length)];
+      const sz = 110 + Math.random()*65;
+      const el = document.createElement('div');
+      el.className = 'ex-particle';
+      el.style.cssText = `width:${sz}px;height:${sz}px;left:${cx-sz/2}px;top:${cy-sz/2}px;`;
+      const cv = document.createElement('canvas');
+      cv.width = sz; cv.height = sz;
+      drawChart(cv.getContext('2d'), type, sz, pal);
+      el.appendChild(cv);
+      blastLayer.appendChild(el);
+      const angle = Math.random()*Math.PI*2, speed = 5+Math.random()*10;
+      const blRect = blastLayer.getBoundingClientRect();
+      const floor = window.innerHeight - blRect.top - sz - 8;
+      return {
+        el, size: sz,
+        x: cx-sz/2, y: cy-sz/2,
+        vx: Math.cos(angle)*speed,
+        vy: Math.sin(angle)*speed - 4 - Math.random()*6,
+        rot: Math.random()*360,
+        rotV: (Math.random()-0.5)*9,
+        gravity: 0.38+Math.random()*0.18,
+        bounce: 0.35+Math.random()*0.2,
+        friction: 0.87,
+        opacity: 1, bounces: 0,
+        maxBounces: 2+Math.floor(Math.random()*2),
+        floor
+      };
+    }
+
+    function spawnSparks(cx, cy, n) {
+      const colors = [GOLD,GOLD2,'#fff8e0','#3b82f6','#22c55e','#f43f5e'];
+      for(let i=0;i<n;i++){
+        const a=Math.random()*Math.PI*2, sp=4+Math.random()*11;
+        sparks.push({x:cx,y:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-Math.random()*5,
+          life:1,decay:0.016+Math.random()*0.024,r:1.5+Math.random()*3,
+          color:colors[Math.floor(Math.random()*6)],gravity:0.18+Math.random()*0.1});
+      }
+      if(!sparkAnimId) animateSparks();
+    }
+
+    function animateSparks() {
+      exCtx.clearRect(0,0,exCanvas.width,exCanvas.height);
+      sparks = sparks.filter(s=>s.life>0);
+      sparks.forEach(s=>{
+        s.x+=s.vx;s.y+=s.vy;s.vy+=s.gravity;s.vx*=0.97;s.life-=s.decay;
+        exCtx.globalAlpha=Math.max(0,s.life);
+        exCtx.beginPath();exCtx.arc(s.x,s.y,s.r,0,Math.PI*2);exCtx.fillStyle=s.color;exCtx.fill();
+        exCtx.beginPath();exCtx.moveTo(s.x,s.y);exCtx.lineTo(s.x-s.vx*2.5,s.y-s.vy*2.5);
+        exCtx.strokeStyle=s.color;exCtx.lineWidth=s.r*0.55;exCtx.stroke();
+      });
+      exCtx.globalAlpha=1;
+      if(sparks.length>0){sparkAnimId=requestAnimationFrame(animateSparks);}
+      else{sparkAnimId=null;exCtx.clearRect(0,0,exCanvas.width,exCanvas.height);}
+    }
+
+    function physLoop() {
+      const blRect = blastLayer.getBoundingClientRect();
+      const layerW = blastLayer.offsetWidth;
+      physParticles.forEach(p=>{
+        if(p.opacity<=0)return;
+        p.x+=p.vx;p.y+=p.vy;p.vy+=p.gravity;p.vx*=0.995;p.rot+=p.rotV;
+        const fl = window.innerHeight - blRect.top - p.size - 8;
+        if(p.y>=fl){p.y=fl;p.vy=-Math.abs(p.vy)*p.bounce;p.vx*=p.friction;p.rotV*=0.55;p.bounces++;}
+        if(p.x<-blRect.left){p.x=-blRect.left;p.vx=Math.abs(p.vx)*0.5;}
+        if(p.x+p.size>layerW-blRect.left+window.innerWidth){p.x=window.innerWidth-blRect.left-p.size;p.vx=-Math.abs(p.vx)*0.5;}
+        if(p.bounces>=p.maxBounces)p.opacity=Math.max(0,p.opacity-0.02);
+        p.el.style.left=p.x+'px';p.el.style.top=p.y+'px';
+        p.el.style.transform=`rotate(${p.rot}deg)`;p.el.style.opacity=p.opacity;
+        if(p.opacity<=0&&p.el.parentNode)p.el.remove();
+      });
+      physParticles=physParticles.filter(p=>p.opacity>0);
+      if(physParticles.length>0){physAnimId=requestAnimationFrame(physLoop);}else physAnimId=null;
+    }
+
+    function spawnStatBubble(cx, cy) {
+      const label=STAT_LABELS[Math.floor(Math.random()*STAT_LABELS.length)];
+      const el=document.createElement('div');
+      el.className='ex-stat-bubble';el.textContent=label;
+      el.style.left=cx+'px';el.style.top=cy+'px';
+      blastLayer.appendChild(el);
+      const a=-Math.PI/2+(Math.random()-0.5)*Math.PI*1.3,sp=3+Math.random()*7;
+      let vx=Math.cos(a)*sp,vy=Math.sin(a)*sp,x=cx,y=cy,rot=0,rotV=(Math.random()-0.5)*5,opacity=1,bounces=0;
+      function anim(){
+        x+=vx;y+=vy;vy+=0.28;vx*=0.995;rot+=rotV;
+        const blRect=blastLayer.getBoundingClientRect();
+        const fl=window.innerHeight-blRect.top-30;
+        if(y>=fl){y=fl;vy=-Math.abs(vy)*0.38;vx*=0.82;rotV*=0.5;bounces++;}
+        if(bounces>=2)opacity=Math.max(0,opacity-0.03);
+        el.style.left=x+'px';el.style.top=y+'px';
+        el.style.transform=`rotate(${rot}deg)`;el.style.opacity=opacity;
+        if(opacity>0)requestAnimationFrame(anim);else el.remove();
+      }
+      requestAnimationFrame(anim);
+    }
+
+    function explode() {
+      const vc = getViewportCenter();
+      const bc = getBlastCenter();
+
+      profileImg.classList.remove('exploding');void profileImg.offsetWidth;profileImg.classList.add('exploding');
+      setTimeout(()=>profileImg.classList.remove('exploding'),400);
+      pulseRing.classList.remove('fire');void pulseRing.offsetWidth;pulseRing.classList.add('fire');
+
+      spawnSparks(vc.x, vc.y, 60);
+
+      const n=3+Math.floor(Math.random()*4);
+      for(let i=0;i<n;i++)physParticles.push(makeChartEl(bc.x, bc.y));
+      if(!physAnimId)physLoop();
+
+      const bn=2+Math.floor(Math.random()*3);
+      for(let i=0;i<bn;i++)setTimeout(()=>spawnStatBubble(
+        bc.x+(Math.random()-0.5)*40,
+        bc.y+(Math.random()-0.5)*40
+      ),i*90);
+    }
+
+    profileWrap.addEventListener('click', explode);
+  })();
+  </script>
 </body>
 </html>
