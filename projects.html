@@ -44,23 +44,54 @@
         <button class="pill" type="button" data-filter="bi-decision">BI / Decision</button>
       </div>
       <div class="projects-grid">
+
+        <!-- UPDATED: CyberSec v2 -->
         <article class="project-card featured reveal card-spotlight" data-tags="ai-nlp machine-learning">
+          <div class="card-banner tag-nlp"><i class="fa-solid fa-shield-halved"></i> AI / NLP</div>
           <div class="badge"><i class="fa-solid fa-star"></i> FEATURED</div>
           <h2>CyberSec Severity Intelligence Engine</h2>
-          <div class="meta">NVD CVE → NLP + Topic Modeling → Severity Prediction</div>
-          <p>End-to-end system that predicts vulnerability severity (LOW/MEDIUM/HIGH/CRITICAL) from CVE descriptions using NLP features and topic modeling.</p>
-          <div class="chips"><span class="chip">Python</span><span class="chip">NLP</span><span class="chip">LDA</span><span class="chip">Random Forest</span></div>
+          <div class="meta">NVD CVE → TF-IDF + SecBERT → Severity Prediction · Live Streamlit App</div>
+          <p>End-to-end NLP pipeline that predicts CVE severity (LOW/MEDIUM/HIGH/CRITICAL) using TF-IDF bigrams + XGBoost and a fine-tuned SecBERT model. Achieves 0.81 F1 on CRITICAL — the highest-stakes class — with SHAP token-level explainability and an LLM cost-benchmark comparison.</p>
+          <div class="chips"><span class="chip">Python</span><span class="chip">SecBERT</span><span class="chip">XGBoost</span><span class="chip">SHAP</span><span class="chip">Streamlit</span><span class="chip">SMOTE</span></div>
           <a class="github-link" href="https://github.com/SURIYAPRASATH-PARAMESWARAN/cve-severity-intelligence-engine" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View on GitHub</a>
         </article>
+
+        <!-- UPDATED: Fraud Triage Engine -->
         <article class="project-card featured reveal card-spotlight" data-tags="machine-learning bi-decision">
+          <div class="card-banner tag-ml"><i class="fa-solid fa-robot"></i> Machine Learning</div>
           <div class="badge"><i class="fa-solid fa-star"></i> FEATURED</div>
           <h2>Fraud Triage Engine</h2>
-          <div class="meta">Risk scoring + ranking under analyst capacity constraints</div>
-          <p>Ranks transactions by fraud risk and evaluates capture under fixed daily review capacity (triage policy), focusing on operational decision-making.</p>
-          <div class="chips"><span class="chip">Python</span><span class="chip">Logistic Regression</span><span class="chip">Ranking</span><span class="chip">Decision Systems</span></div>
+          <div class="meta">Temporal splitting → calibrated ensemble → capacity-constrained triage policy</div>
+          <p>Production-aware fraud detection system that reframes detection as a capacity-constrained ranking problem. Uses a calibrated LightGBM + XGBoost ensemble with temporal splits, cost-sensitive thresholding, SHAP explainability, and concept drift monitoring — achieving 81.3% fraud recall at 500 daily reviews with 70% cost reduction.</p>
+          <div class="chips"><span class="chip">Python</span><span class="chip">LightGBM</span><span class="chip">XGBoost</span><span class="chip">SHAP</span><span class="chip">Isotonic Calibration</span><span class="chip">Drift Detection</span></div>
           <a class="github-link" href="https://github.com/SURIYAPRASATH-PARAMESWARAN/Fraud-Triage-Engine" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View on GitHub</a>
         </article>
+
+        <!-- UPDATED: Telecom Churn Decision Engine -->
+        <article class="project-card featured reveal card-spotlight" data-tags="machine-learning bi-decision">
+          <div class="card-banner tag-bi"><i class="fa-solid fa-chart-line"></i> BI / Decision</div>
+          <div class="badge"><i class="fa-solid fa-star"></i> FEATURED</div>
+          <h2>Telecom Churn Decision Engine</h2>
+          <div class="meta">Churn risk + uplift + CLV → MILP budget optimisation → Monte Carlo simulation</div>
+          <p>Profit-optimised retention system that goes beyond churn scoring — combining survival-adjusted CLV, T-learner uplift modeling, and 0/1 knapsack MILP allocation. Achieves 8.15× ROI at £10k budget with correlated Monte Carlo risk simulation across 2,000 scenarios, outperforming highest-churn-first targeting by +37.7% mean profit.</p>
+          <div class="chips"><span class="chip">Python</span><span class="chip">LightGBM</span><span class="chip">PuLP MILP</span><span class="chip">Uplift Modeling</span><span class="chip">Monte Carlo</span><span class="chip">CLV</span></div>
+          <a class="github-link" href="https://github.com/SURIYAPRASATH-PARAMESWARAN/teleco-churn-decision-engine" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View on GitHub</a>
+        </article>
+
+        <!-- UPDATED: Campaign ROI / Bank Marketing -->
+        <article class="project-card featured reveal card-spotlight" data-tags="machine-learning bi-decision">
+          <div class="card-banner tag-bi"><i class="fa-solid fa-bullseye"></i> BI / Decision</div>
+          <div class="badge"><i class="fa-solid fa-star"></i> FEATURED</div>
+          <h2>Campaign ROI Optimisation Engine</h2>
+          <div class="meta">Bank marketing → profit-ranked triage → Streamlit decision dashboard</div>
+          <p>Answers the real operational question for a Portuguese bank's outbound campaigns: given N calls per day, which customers maximise expected profit? Uses Optuna-tuned Random Forest (ROC-AUC 0.81) with SHAP-driven feature analysis, achieving 77% conversion precision in the top 1,000 contacts — 6.8× better than random — with an interactive profit simulation dashboard.</p>
+          <div class="chips"><span class="chip">Python</span><span class="chip">Random Forest</span><span class="chip">Optuna</span><span class="chip">SHAP</span><span class="chip">Streamlit</span><span class="chip">Profit Simulation</span></div>
+          <a class="github-link" href="https://github.com/SURIYAPRASATH-PARAMESWARAN/campaign-roi-optimization-engine" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View on GitHub</a>
+        </article>
+
+        <!-- UNCHANGED -->
         <article class="project-card featured reveal card-spotlight" data-tags="forecasting bi-decision">
+          <div class="card-banner tag-fc"><i class="fa-solid fa-chart-column"></i> Forecasting</div>
           <div class="badge"><i class="fa-solid fa-star"></i> FEATURED</div>
           <h2>SaaS Revenue Intelligence &amp; Forecasting Engine</h2>
           <div class="meta">Retention + usage analytics → revenue intelligence</div>
@@ -68,42 +99,40 @@
           <div class="chips"><span class="chip">Python</span><span class="chip">Cohorts</span><span class="chip">Forecasting</span><span class="chip">Analytics</span></div>
           <a class="github-link" href="https://github.com/SURIYAPRASATH-PARAMESWARAN/SaaS-Revenue-Intelligence-Engine" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View on GitHub</a>
         </article>
+
+        <!-- UNCHANGED -->
         <article class="project-card reveal card-spotlight" data-tags="forecasting">
+          <div class="card-banner tag-fc"><i class="fa-solid fa-clock-rotate-left"></i> Forecasting</div>
           <h2>Rossmann Sales Forecasting</h2>
           <div class="meta">Time-series forecasting with strong baselines + validation</div>
           <p>Forecasts total daily sales with proper time-based validation, trend/seasonality diagnostics, and promo impact analysis.</p>
           <div class="chips"><span class="chip">Python</span><span class="chip">Time Series</span><span class="chip">SARIMA</span><span class="chip">Forecasting</span></div>
           <a class="github-link" href="https://github.com/SURIYAPRASATH-PARAMESWARAN/rossmann-sales-forecasting" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View on GitHub</a>
         </article>
+
+        <!-- UNCHANGED -->
         <article class="project-card reveal card-spotlight" data-tags="data-engineering ai-nlp">
+          <div class="card-banner tag-de"><i class="fa-solid fa-database"></i> Data Engineering</div>
           <h2>Job Market Intelligence Pipeline</h2>
           <div class="meta">Trend detection on job postings (rising vs falling skills)</div>
           <p>End-to-end pipeline that ingests job postings, normalizes skills, and tracks momentum over time for labor market intelligence.</p>
           <div class="chips"><span class="chip">Python</span><span class="chip">DuckDB</span><span class="chip">NLP</span><span class="chip">Trend Analytics</span></div>
           <a class="github-link" href="https://github.com/SURIYAPRASATH-PARAMESWARAN/job-market-skill-trends" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View on GitHub</a>
         </article>
+
+        <!-- UNCHANGED -->
         <article class="project-card reveal card-spotlight" data-tags="machine-learning bi-decision">
+          <div class="card-banner tag-ml"><i class="fa-solid fa-coins"></i> Machine Learning</div>
           <h2>Digital Finance Platform for Logistics</h2>
           <div class="meta">Risk scoring + pricing + decisioning for invoice payouts</div>
           <p>Mini decisioning + pricing engine that predicts late-payment risk, approves instant pay, and generates a risk-based fee quote.</p>
           <div class="chips"><span class="chip">Python</span><span class="chip">Risk Modeling</span><span class="chip">Profit Simulation</span><span class="chip">Decisioning</span></div>
           <a class="github-link" href="https://github.com/SURIYAPRASATH-PARAMESWARAN/Digital-Finance-Logistics" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View on GitHub</a>
         </article>
-        <article class="project-card reveal card-spotlight" data-tags="bi-decision">
-          <h2>Campaign ROI Optimization Engine</h2>
-          <div class="meta">Profit-driven decision dashboard under capacity constraints</div>
-          <p>Optimizes outreach decisions with limited daily call capacity to maximize expected profit using a decision-focused dashboard approach.</p>
-          <div class="chips"><span class="chip">Python</span><span class="chip">Optimization</span><span class="chip">Decision Dashboard</span><span class="chip">BI</span></div>
-          <a class="github-link" href="https://github.com/SURIYAPRASATH-PARAMESWARAN/campaign-roi-optimization-engine" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View on GitHub</a>
-        </article>
-        <article class="project-card reveal card-spotlight" data-tags="machine-learning bi-decision">
-          <h2>Telecom Churn Decision Engine</h2>
-          <div class="meta">Profit-optimized retention strategy with uplift + ROI</div>
-          <p>Decision system to target retention actions using churn risk, uplift logic, and ROI simulation.</p>
-          <div class="chips"><span class="chip">Python</span><span class="chip">Churn</span><span class="chip">Uplift</span><span class="chip">ROI</span></div>
-          <a class="github-link" href="https://github.com/SURIYAPRASATH-PARAMESWARAN/teleco-churn-decision-engine" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View on GitHub</a>
-        </article>
+
+        <!-- UNCHANGED -->
         <article class="project-card ghost reveal card-spotlight" data-tags="all">
+          <div class="card-banner tag-more"><i class="fa-solid fa-layer-group"></i> More</div>
           <div class="badge"><i class="fa-solid fa-layer-group"></i> MORE</div>
           <h2>More Projects &amp; Case Studies</h2>
           <div class="meta">Full repository list + ongoing builds</div>
@@ -111,6 +140,7 @@
           <div class="chips"><span class="chip">In Progress</span><span class="chip">Case Studies</span><span class="chip">Docs</span></div>
           <a class="github-link" href="https://github.com/SURIYAPRASATH-PARAMESWARAN" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View All Repos</a>
         </article>
+
       </div>
     </section>
   </main>

@@ -147,19 +147,29 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
 
 /* ============================================================
    PROJECT FILTER PILLS
+   Fix: force in-view on shown cards so reveal opacity doesn't hide them
 ============================================================ */
 (() => {
   const pills = document.querySelectorAll(".project-pills .pill");
   const cards = document.querySelectorAll(".projects-grid .project-card");
   if (!pills.length || !cards.length) return;
+
   pills.forEach(pill => {
     pill.addEventListener("click", () => {
       pills.forEach(p => p.classList.remove("active"));
       pill.classList.add("active");
       const filter = pill.dataset.filter || "all";
+
       cards.forEach(card => {
         const tags = (card.dataset.tags || "").split(" ");
-        card.style.display = filter === "all" || tags.includes(filter) ? "" : "none";
+        const visible = filter === "all" || tags.includes(filter);
+        if (visible) {
+          card.style.display = "";
+          // ensure reveal animation doesn't keep card invisible
+          card.classList.add("in-view");
+        } else {
+          card.style.display = "none";
+        }
       });
     });
   });
@@ -295,7 +305,6 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
   }
 
   function drawBars(t) {
-    /* ── draw the bars ── */
     for (const g of barGroups) {
       for (const [bar, isSeries_a] of [[g.a, true], [g.b, false]]) {
         const { y, h } = getBarTop(bar, t);
@@ -314,15 +323,12 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
       }
     }
 
-    /* ── top-center points per series ── */
     const ptsA = barGroups.map(g => { const { y, cx } = getBarTop(g.a, t); return { x: cx, y }; });
     const ptsB = barGroups.map(g => { const { y, cx } = getBarTop(g.b, t); return { x: cx, y }; });
 
-    /* ── Catmull-Rom connecting lines ── */
     drawCatmullRom(ptsA, 0.42, 1.2);
     drawCatmullRom(ptsB, 0.20, 0.9);
 
-    /* ── dots at bar tops ── */
     function drawDots(pts, dotR, dotAlpha) {
       for (const p of pts) {
         ctx.beginPath();
@@ -338,7 +344,6 @@ document.querySelectorAll(".card-spotlight").forEach(card => {
     drawDots(ptsA, 2.0, 0.55);
     drawDots(ptsB, 1.4, 0.30);
 
-    /* ── dashed vertical bridge between A and B per group ── */
     ctx.setLineDash([2, 5]);
     ctx.lineWidth = 0.4;
     for (let i = 0; i < barGroups.length; i++) {
