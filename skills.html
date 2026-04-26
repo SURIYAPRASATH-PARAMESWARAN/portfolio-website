@@ -3,10 +3,106 @@
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Skills | Suriya P</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./style.css" />
+  <style>
+    .skills-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+    }
+    .skills-page h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.03em;
+    }
+    .skills-intro {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      opacity: 0.6;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── Section ── */
+    .skills-section { margin-bottom: 3rem; }
+    .skills-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Progress bars ── */
+    .skill-row { display: flex; flex-direction: column; gap: 0.32rem; margin-bottom: 1.2rem; }
+    .skill-label-row { display: flex; justify-content: space-between; align-items: baseline; }
+    .skill-name { font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500; }
+    .skill-pct { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; opacity: 0.45; }
+    .bar-track { width: 100%; height: 6px; background: rgba(255,255,255,0.07); border-radius: 99px; overflow: hidden; }
+    .bar-fill {
+      height: 100%; width: 0%; border-radius: 99px;
+      transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+    }
+    .bar-fill::after {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 40px; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.32), transparent);
+      border-radius: 99px;
+      animation: shimmer 2.2s ease-in-out infinite;
+      opacity: 0; transition: opacity 0.4s ease 1s;
+    }
+    .bar-fill.animated::after { opacity: 1; }
+    @keyframes shimmer { 0% { transform: translateX(-60px); } 100% { transform: translateX(60px); } }
+
+    .c-blue   { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .c-purple { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+    .c-green  { background: linear-gradient(90deg, #10b981, #34d399); }
+    .c-orange { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .c-red    { background: linear-gradient(90deg, #ef4444, #f87171); }
+    .c-indigo { background: linear-gradient(90deg, #6366f1, #818cf8); }
+    .c-teal   { background: linear-gradient(90deg, #14b8a6, #2dd4bf); }
+    .c-amber  { background: linear-gradient(90deg, #d97706, #f59e0b); }
+
+    /* ── Coloured chips ── */
+    .chip-grid { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+
+    .chip {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 500;
+      padding: 0.35rem 0.95rem;
+      border-radius: 99px;
+      cursor: default;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .chip:hover { transform: translateY(-2px); opacity: 0.85; }
+
+    /* colour variants — matching Pradeep's style */
+    .chip-blue    { background: #1d4ed8; color: #bfdbfe; }
+    .chip-purple  { background: #6d28d9; color: #ddd6fe; }
+    .chip-green   { background: #065f46; color: #6ee7b7; }
+    .chip-teal    { background: #0f766e; color: #99f6e4; }
+    .chip-orange  { background: #92400e; color: #fde68a; }
+    .chip-red     { background: #991b1b; color: #fecaca; }
+    .chip-indigo  { background: #3730a3; color: #c7d2fe; }
+    .chip-sky     { background: #075985; color: #bae6fd; }
+    .chip-pink    { background: #9d174d; color: #fbcfe8; }
+    .chip-lime    { background: #3f6212; color: #d9f99d; }
+    .chip-rose    { background: #881337; color: #fecdd3; }
+    .chip-amber   { background: #78350f; color: #fde68a; }
+    .chip-slate   { background: #1e293b; color: #cbd5e1; border: 1px solid rgba(255,255,255,0.1); }
+    .chip-cyan    { background: #164e63; color: #a5f3fc; }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
 </head>
 <body>
   <canvas id="net"></canvas>
@@ -14,31 +110,211 @@
     <a href="./index.html" class="logo">SURIYA P</a>
     <button class="nav-toggle"><span></span><span></span><span></span></button>
     <ul class="nav-links">
-      <li><a href="./index.html">Home</a></li><li><a href="./about-me.html">About Me</a></li>
-      <li><a href="./projects.html">Projects</a></li><li><a href="./skills.html" class="active">Skills</a></li>
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./about-me.html">About Me</a></li>
+      <li><a href="./projects.html">Projects</a></li>
+      <li><a href="./skills.html" class="active">Skills</a></li>
       <li><a href="./contact.html">Contact</a></li>
-      <li class="dropdown"><span class="dropbtn">More <span class="caret">▾</span></span>
+      <li class="dropdown">
+        <span class="dropbtn">More <span class="caret">▾</span></span>
         <ul class="dropdown-menu">
-          <li><a href="./education.html">Education</a></li><li><a href="./certifications.html">Certifications</a></li>
-          <li><a href="./volunteering.html">Volunteering</a></li><li><a href="./organizations.html">Organizations</a></li>
+          <li><a href="./education.html">Education</a></li>
+          <li><a href="./certifications.html">Certifications</a></li>
+          <li><a href="./volunteering.html">Volunteering</a></li>
+          <li><a href="./organizations.html">Organizations</a></li>
         </ul>
       </li>
     </ul>
   </nav>
+
   <main class="page-container">
     <section class="skills-page">
-      <h1>Skills &amp; Technologies</h1>
-      <p class="skills-intro">Grouped by capability — focused on production-style data systems, decision engines, and real-world tooling.</p>
-      <div class="skill-block"><h2><i class="fa-solid fa-code"></i> Programming</h2><div class="chip-row"><span class="chip blue">Python</span><span class="chip purple">SQL</span><span class="chip dark">R</span><span class="chip yellow">JavaScript</span><span class="chip dark">HTML</span><span class="chip dark">CSS</span></div></div>
-      <div class="skill-block"><h2><i class="fa-solid fa-brain"></i> Machine Learning &amp; Statistics</h2><div class="chip-row"><span class="chip dark">Machine Learning</span><span class="chip dark">Statistical Analysis</span><span class="chip dark">Scikit-Learn</span><span class="chip dark">XGBoost</span><span class="chip dark">LightGBM</span><span class="chip dark">Bayesian Networks</span><span class="chip dark">A/B Testing</span><span class="chip dark">Feature Engineering</span><span class="chip dark">Anomaly Detection</span></div></div>
-      <div class="skill-block"><h2><i class="fa-solid fa-microchip"></i> Deep Learning &amp; NLP</h2><div class="chip-row"><span class="chip red">PyTorch</span><span class="chip dark">Deep Learning</span><span class="chip dark">LSTM</span><span class="chip dark">Transformers</span><span class="chip dark">NLP</span><span class="chip dark">LLMs</span></div></div>
-      <div class="skill-block"><h2><i class="fa-solid fa-chart-line"></i> Data Analysis &amp; Visualization</h2><div class="chip-row"><span class="chip dark">Pandas</span><span class="chip dark">NumPy</span><span class="chip dark">Matplotlib</span><span class="chip dark">Seaborn</span><span class="chip dark">Plotly</span><span class="chip dark">Time Series Analysis</span><span class="chip dark">Forecasting</span><span class="chip blue">Power BI</span><span class="chip dark">Tableau</span><span class="chip teal">Streamlit</span></div></div>
-      <div class="skill-block"><h2><i class="fa-solid fa-screwdriver-wrench"></i> Data Engineering &amp; Tools</h2><div class="chip-row"><span class="chip dark">ETL</span><span class="chip dark">Informatica</span><span class="chip dark">MLflow</span><span class="chip dark">MySQL</span><span class="chip dark">PostgreSQL</span><span class="chip dark">Git</span><span class="chip dark">Docker</span><span class="chip dark">Linux</span><span class="chip dark">VS Code</span></div></div>
-      <div class="skill-block"><h2><i class="fa-solid fa-cloud"></i> Cloud Platforms</h2><div class="chip-row"><span class="chip orange">AWS</span><span class="chip dark">AWS S3</span><span class="chip dark">AWS Lambda</span><span class="chip dark">AWS Athena</span><span class="chip blue">Google Cloud</span><span class="chip dark">BigQuery</span><span class="chip yellow">Firebase</span></div></div>
-      <div class="skill-block"><h2><i class="fa-solid fa-server"></i> Backend, APIs &amp; Web</h2><div class="chip-row"><span class="chip teal">FastAPI</span><span class="chip green">Node.js</span><span class="chip dark">Express</span><span class="chip teal">React</span><span class="chip dark">REST APIs</span><span class="chip dark">GraphQL</span><span class="chip dark">JWT</span><span class="chip dark">Kafka</span></div></div>
+
+      <h1 class="reveal">Skills &amp; Technologies</h1>
+      <p class="skills-intro reveal">Focused on data science, analytics, ML, and BI — the skills that actually appear in job descriptions.</p>
+
+      <!-- ── CORE PROFICIENCIES (bars) ── -->
+      <div class="skills-section reveal">
+        <h2 class="skills-section-title">Core Proficiencies</h2>
+        <div class="skill-row">
+          <div class="skill-label-row"><span class="skill-name">Python</span><span class="skill-pct">95%</span></div>
+          <div class="bar-track"><div class="bar-fill c-blue" data-width="95"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label-row"><span class="skill-name">SQL &amp; Databases</span><span class="skill-pct">90%</span></div>
+          <div class="bar-track"><div class="bar-fill c-green" data-width="90"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label-row"><span class="skill-name">Machine Learning</span><span class="skill-pct">88%</span></div>
+          <div class="bar-track"><div class="bar-fill c-purple" data-width="88"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label-row"><span class="skill-name">Statistical Analysis &amp; Probability</span><span class="skill-pct">85%</span></div>
+          <div class="bar-track"><div class="bar-fill c-indigo" data-width="85"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label-row"><span class="skill-name">Data Analysis &amp; Visualisation</span><span class="skill-pct">87%</span></div>
+          <div class="bar-track"><div class="bar-fill c-teal" data-width="87"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label-row"><span class="skill-name">Deep Learning / NLP</span><span class="skill-pct">78%</span></div>
+          <div class="bar-track"><div class="bar-fill c-red" data-width="78"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label-row"><span class="skill-name">Data Engineering &amp; ETL</span><span class="skill-pct">82%</span></div>
+          <div class="bar-track"><div class="bar-fill c-orange" data-width="82"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label-row"><span class="skill-name">BI &amp; Dashboard Design</span><span class="skill-pct">85%</span></div>
+          <div class="bar-track"><div class="bar-fill c-amber" data-width="85"></div></div>
+        </div>
+      </div>
+
+      <!-- ── PROGRAMMING LANGUAGES ── -->
+      <div class="skills-section reveal">
+        <h2 class="skills-section-title">Programming Languages</h2>
+        <div class="chip-grid">
+          <span class="chip chip-blue">Python</span>
+          <span class="chip chip-orange">SQL</span>
+          <span class="chip chip-slate">R</span>
+          <span class="chip chip-yellow" style="background:#854d0e;color:#fef08a;">JavaScript</span>
+          <span class="chip chip-rose">HTML / CSS</span>
+          <span class="chip chip-sky">Dart</span>
+        </div>
+      </div>
+
+      <!-- ── DATA SCIENCE & ML ── -->
+      <div class="skills-section reveal">
+        <h2 class="skills-section-title">Data Science &amp; Machine Learning</h2>
+        <div class="chip-grid">
+          <span class="chip chip-purple">scikit-learn</span>
+          <span class="chip chip-green">LightGBM</span>
+          <span class="chip chip-blue">XGBoost</span>
+          <span class="chip chip-teal">CatBoost</span>
+          <span class="chip chip-amber">SHAP</span>
+          <span class="chip chip-sky">Optuna</span>
+          <span class="chip chip-red">PyTorch</span>
+          <span class="chip chip-indigo">HuggingFace Transformers</span>
+          <span class="chip chip-pink">SMOTE</span>
+          <span class="chip chip-lime">Uplift Modelling</span>
+          <span class="chip chip-purple">Prophet</span>
+          <span class="chip chip-cyan">PuLP / MILP</span>
+          <span class="chip chip-green">Feature Engineering</span>
+          <span class="chip chip-orange">A/B Testing</span>
+          <span class="chip chip-slate">Anomaly Detection</span>
+          <span class="chip chip-blue">Forecasting</span>
+          <span class="chip chip-indigo">Isotonic Calibration</span>
+          <span class="chip chip-teal">Cohort Analysis</span>
+          <span class="chip chip-amber">RFM Segmentation</span>
+          <span class="chip chip-rose">Monte Carlo Simulation</span>
+          <span class="chip chip-lime">Survival Analysis</span>
+          <span class="chip chip-sky">LSTM</span>
+          <span class="chip chip-slate">statsmodels</span>
+          <span class="chip chip-red">SecBERT</span>
+          <span class="chip chip-indigo">TF-IDF</span>
+          <span class="chip chip-purple">sklearn Pipelines</span>
+        </div>
+      </div>
+
+      <!-- ── DATA ANALYTICS & DATABASES ── -->
+      <div class="skills-section reveal">
+        <h2 class="skills-section-title">Data Analytics &amp; Databases</h2>
+        <div class="chip-grid">
+          <span class="chip chip-green">PostgreSQL</span>
+          <span class="chip chip-blue">MySQL</span>
+          <span class="chip chip-teal">DuckDB</span>
+          <span class="chip chip-cyan">Snowflake</span>
+          <span class="chip chip-orange">pandas</span>
+          <span class="chip chip-indigo">Polars</span>
+          <span class="chip chip-sky">NumPy</span>
+          <span class="chip chip-purple">PySpark</span>
+          <span class="chip chip-green">Excel</span>
+          <span class="chip chip-slate">Window Functions / CTEs</span>
+          <span class="chip chip-lime">Stored Functions (plpgsql)</span>
+          <span class="chip chip-amber">Pydantic v2</span>
+          <span class="chip chip-orange">dbt</span>
+        </div>
+      </div>
+
+      <!-- ── BI & VISUALISATION ── -->
+      <div class="skills-section reveal">
+        <h2 class="skills-section-title">BI &amp; Visualisation</h2>
+        <div class="chip-grid">
+          <span class="chip chip-blue">Power BI</span>
+          <span class="chip chip-indigo">DAX</span>
+          <span class="chip chip-sky">Power Query (M)</span>
+          <span class="chip chip-orange">Tableau</span>
+          <span class="chip chip-teal">Streamlit</span>
+          <span class="chip chip-purple">Plotly</span>
+          <span class="chip chip-green">Matplotlib</span>
+          <span class="chip chip-amber">Seaborn</span>
+          <span class="chip chip-sky">Looker / Looker Studio</span>
+        </div>
+      </div>
+
+      <!-- ── DEVOPS & DEPLOYMENT ── -->
+      <div class="skills-section reveal">
+        <h2 class="skills-section-title">DevOps &amp; Deployment</h2>
+        <div class="chip-grid">
+          <span class="chip chip-slate">Git / GitHub</span>
+          <span class="chip chip-blue">Docker</span>
+          <span class="chip chip-teal">FastAPI</span>
+          <span class="chip chip-green">GitHub Actions (CI/CD)</span>
+          <span class="chip chip-purple">MLflow</span>
+          <span class="chip chip-orange">pytest</span>
+          <span class="chip chip-sky">REST APIs</span>
+          <span class="chip chip-slate">Linux / Bash</span>
+          <span class="chip chip-amber">joblib</span>
+          <span class="chip chip-rose">Apache Airflow</span>
+          <span class="chip chip-slate">Arduino</span>
+        </div>
+      </div>
+
+      <!-- ── CLOUD ── -->
+      <div class="skills-section reveal">
+        <h2 class="skills-section-title">Cloud Platforms</h2>
+        <div class="chip-grid">
+          <span class="chip chip-orange">AWS</span>
+          <span class="chip chip-blue">Azure</span>
+          <span class="chip chip-teal">Google Cloud</span>
+          <span class="chip chip-green">BigQuery</span>
+        </div>
+      </div>
+
     </section>
   </main>
-  <footer><p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p></footer>
+
+  <footer>
+    <p>&copy; 2026 Suriya Prasath Parameswaran. All rights reserved.</p>
+    <div class="social-links">
+      <a href="https://github.com/SURIYAPRASATH-PARAMESWARAN" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/suriyaprasathp" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="mailto:suriyavictor6@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </footer>
+
   <script src="./script.js" defer></script>
+  <script>
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    const barObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.querySelectorAll('.bar-fill').forEach((bar, i) => {
+          setTimeout(() => {
+            bar.style.width = bar.dataset.width + '%';
+            bar.classList.add('animated');
+          }, i * 90);
+        });
+        barObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.18 });
+    document.querySelectorAll('.skills-section').forEach(s => barObs.observe(s));
+  </script>
 </body>
 </html>
